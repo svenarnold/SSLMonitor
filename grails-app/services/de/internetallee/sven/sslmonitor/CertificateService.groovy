@@ -29,13 +29,16 @@ import java.security.cert.Certificate
 
 class CertificateService {
 
-    SSLSocketFactory sslSocketFactory
+    private SSLSocketFactory sslSocketFactory
 
-    {
-        SSLContext insecureSSLContext = SSLContext.getInstance("TLS")
-        def insecureTrustManager = new InsecureTrustManager()
-        insecureSSLContext.init(null, (TrustManager[]) [insecureTrustManager].toArray(), null)
-        sslSocketFactory = insecureSSLContext.socketFactory
+    def getSSLSocketFactory() {
+        if (! sslSocketFactory) {
+            SSLContext insecureSSLContext = SSLContext.getInstance("TLS")
+            def insecureTrustManager = new InsecureTrustManager()
+            insecureSSLContext.init(null, (TrustManager[]) [insecureTrustManager].toArray(), null)
+            sslSocketFactory = insecureSSLContext.socketFactory
+        }
+        sslSocketFactory
     }
 
     def sha1HexString(byte[] data) {
@@ -52,7 +55,7 @@ class CertificateService {
 
     def getX509CertificatesInformation(MonitoredServer server) throws IOException, UnknownHostException {
 
-        SSLSocket sslSocket = sslSocketFactory.createSocket(server.hostname, server.port) as SSLSocket
+        SSLSocket sslSocket = getSSLSocketFactory().createSocket(server.hostname, server.port) as SSLSocket
         sslSocket.startHandshake();
         SSLSession session = sslSocket.getSession();
 
