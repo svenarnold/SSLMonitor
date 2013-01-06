@@ -22,6 +22,7 @@ class X509CertificateInformationTests {
         assertEquals 'MD5 fingerprint must not be null', 'nullable', certInfo.errors['md5Fingerprint']
         assertEquals 'Valid not before must not be null', 'nullable', certInfo.errors['validNotBefore']
         assertEquals 'Valid not after must not be null', 'nullable', certInfo.errors['validNotAfter']
+        assertEquals 'Server must not be null', 'nullable', certInfo.errors['server']
 
         certInfo.subjectPrincipal = ''
         certInfo.issuerDN = ''
@@ -29,6 +30,7 @@ class X509CertificateInformationTests {
         certInfo.md5Fingerprint = ''
         certInfo.validNotBefore = new Date()
         certInfo.validNotAfter = new Date()
+        certInfo.server = new MonitoredServer(name: 'A Server', hostname: 'localhost', port: 443)
         assertFalse certInfo.validate()
         assertEquals 'Subject principal must not be blank', 'blank', certInfo.errors['subjectPrincipal']
         assertEquals 'Issuer DN must not be blank', 'blank', certInfo.errors['issuerDN']

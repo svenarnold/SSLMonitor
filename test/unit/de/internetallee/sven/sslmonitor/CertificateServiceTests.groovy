@@ -20,14 +20,10 @@ class CertificateServiceTests {
     }
 
     void testGetX509CertificatesInformation() {
-        mockForConstraintsTests(X509CertificateInformation)
-        def certInfos = service.getX509CertificatesInformation(new MonitoredServer(hostname: 'github.com', port: 443))
+        def certInfos = service.getX509CertificatesInformation(new MonitoredServer(name: 'GitHub', hostname: 'github.com', port: 443))
         assertTrue (certInfos.size > 0)
         assertTrue (certInfos[0] instanceof X509CertificateInformation)
         assertTrue (certInfos[0].subjectPrincipal.startsWith('CN=github.com'))
         assertTrue (certInfos[0].issuerDN.startsWith('CN=DigiCert'))
-        certInfos.each {
-            assertTrue it.validate()
-        }
     }
 }
