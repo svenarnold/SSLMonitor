@@ -42,5 +42,5 @@ class MonitoredServer {
         certificateInformationChain cascade: 'all-delete-orphan'
     }
 
-    String toString() { name + '(' + hostname + ':' + port + ')' }
+    String toString() { name + ' (' + hostname + ':' + port + ')' }
 }

@@ -53,6 +53,6 @@ class MonitoredServerTests {
 
     void testToString() {
         def monitoredService = new MonitoredServer(name: 'service', hostname: 'host', port: 80)
-        assertEquals 'service(host:80)', monitoredService.toString()
+        assertEquals 'service (host:80)', monitoredService.toString()
     }
 }
