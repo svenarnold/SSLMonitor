@@ -2,6 +2,8 @@ package de.internetallee.sven.sslmonitor
 
 class X509CertificateInformationController {
 
+    def certificateService
+
     def index() {
         redirect(action: "list", params: params)
     }
@@ -20,5 +22,10 @@ class X509CertificateInformationController {
         }
 
         [x509CertificateInformationInstance: x509CertificateInformationInstance]
+    }
+
+    def updateChains() {
+        certificateService.updateAllCertificateChains()
+        redirect(action: 'list')
     }
 }

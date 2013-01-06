@@ -4,8 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException
 
 class MonitoredServerController {
 
-    def certificateService
-
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
@@ -104,10 +102,4 @@ class MonitoredServerController {
             redirect(action: "show", id: id)
         }
     }
-
-    def updateChains() {
-        certificateService.updateAllCertificateChains()
-        redirect(action: 'list')
-    }
-
 }
