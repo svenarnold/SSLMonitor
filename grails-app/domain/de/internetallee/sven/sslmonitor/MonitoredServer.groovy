@@ -27,10 +27,18 @@ class MonitoredServer {
     String hostname
     int port
 
+    List certificateInformationChain
+
+    static hasMany = [certificateInformationChain: X509CertificateInformation]
+
     static constraints = {
         name(unique: true)
         description(nullable: true)
         hostname(blank: false)
         port(min: 0)
+    }
+
+    static mapping = {
+        certificateInformationChain cascade: 'all-delete-orphan'
     }
 }

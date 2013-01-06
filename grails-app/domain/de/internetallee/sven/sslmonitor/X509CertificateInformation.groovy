@@ -28,6 +28,8 @@ class X509CertificateInformation {
     Date validNotBefore
     Date validNotAfter
 
+    static belongsTo = MonitoredServer
+
     static constraints = {
         subjectPrincipal(blank: false)
         issuerDN(blank: false)

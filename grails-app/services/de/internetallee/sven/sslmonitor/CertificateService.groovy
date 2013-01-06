@@ -58,4 +58,15 @@ class CertificateService {
             )
         }
     }
+
+    def updateAllCertificateChains() {
+        MonitoredServer.findAll().each { server ->
+            if (server.certificateInformationChain)
+                server.certificateInformationChain.clear()
+            else
+                server.certificateInformationChain = []
+            server.certificateInformationChain.addAll(getX509CertificatesInformation(server))
+            server.save()
+        }
+    }
 }
