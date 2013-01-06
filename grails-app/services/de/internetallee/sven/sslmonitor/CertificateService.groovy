@@ -41,7 +41,7 @@ class CertificateService {
         md5Digest.digest().encodeHex().toString()
     }
 
-    def getX509CertificatesInformation(MonitoredServer server) {
+    def getX509CertificatesInformation(MonitoredServer server) throws IOException, UnknownHostException {
         SSLSocket sslSocket = sslSocketFactory.createSocket(server.hostname, server.port) as SSLSocket
         sslSocket.startHandshake();
         SSLSession session = sslSocket.getSession();
@@ -63,8 +63,12 @@ class CertificateService {
         MonitoredServer.list().each { server ->
             if (server.certificateInformationChain)
                 server.certificateInformationChain.clear()
-            getX509CertificatesInformation(server).each {
-                server.addToCertificateInformationChain(it)
+            try {
+                getX509CertificatesInformation(server).each {
+                    server.addToCertificateInformationChain(it)
+                }
+            } catch (Exception e) {
+                log.warn('Exception caught while trying to retrieve certificate information', e)
             }
             server.save()
         }
