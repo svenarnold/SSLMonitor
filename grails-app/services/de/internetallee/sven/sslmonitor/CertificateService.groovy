@@ -19,15 +19,24 @@
 
 package de.internetallee.sven.sslmonitor
 
+import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSession
 import javax.net.ssl.SSLSocket
 import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
 import java.security.MessageDigest
 import java.security.cert.Certificate
 
 class CertificateService {
 
-    SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault()
+    SSLSocketFactory sslSocketFactory
+
+    {
+        SSLContext insecureSSLContext = SSLContext.getInstance("TLS")
+        def insecureTrustManager = new InsecureTrustManager()
+        insecureSSLContext.init(null, (TrustManager[]) [insecureTrustManager].toArray(), null)
+        sslSocketFactory = insecureSSLContext.socketFactory
+    }
 
     def sha1HexString(byte[] data) {
         MessageDigest sha1Digest = MessageDigest.getInstance("SHA1")
@@ -42,6 +51,7 @@ class CertificateService {
     }
 
     def getX509CertificatesInformation(MonitoredServer server) throws IOException, UnknownHostException {
+
         SSLSocket sslSocket = sslSocketFactory.createSocket(server.hostname, server.port) as SSLSocket
         sslSocket.startHandshake();
         SSLSession session = sslSocket.getSession();
