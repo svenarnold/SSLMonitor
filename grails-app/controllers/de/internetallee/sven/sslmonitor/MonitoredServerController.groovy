@@ -58,7 +58,6 @@ class MonitoredServerController {
 
     def update(Long id, Long version) {
         def monitoredServerInstance = MonitoredServer.get(id)
-        bindData(monitoredServerInstance, params, [exclude: 'certificateInformationChain'])
 
         if (!monitoredServerInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'monitoredServer.label', default: 'MonitoredServer'), id])
@@ -76,7 +75,7 @@ class MonitoredServerController {
             }
         }
 
-        monitoredServerInstance.properties = params
+        bindData(monitoredServerInstance, params, [exclude: 'certificateInformationChain'])
 
         if (!monitoredServerInstance.save(flush: true)) {
             render(view: "edit", model: [monitoredServerInstance: monitoredServerInstance])
