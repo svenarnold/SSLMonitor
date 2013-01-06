@@ -25,7 +25,6 @@ import grails.test.mixin.*
 class MonitoredServerTests {
 
     void testConstraints() {
-
         def monitoredService = new MonitoredServer(name: 'Unique Service', hostname: 'localhost', port: 443)
         mockForConstraintsTests(MonitoredServer, [monitoredService])
 
@@ -50,5 +49,10 @@ class MonitoredServerTests {
 
         newService.name = 'New Service'
         assertTrue newService.validate()
+    }
+
+    void testToString() {
+        def monitoredService = new MonitoredServer(name: 'service', hostname: 'host', port: 80)
+        assertEquals 'service(host:80)', monitoredService.toString()
     }
 }

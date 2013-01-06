@@ -41,4 +41,6 @@ class MonitoredServer {
     static mapping = {
         certificateInformationChain cascade: 'all-delete-orphan'
     }
+
+    String toString() { name + '(' + hostname + ':' + port + ')' }
 }
