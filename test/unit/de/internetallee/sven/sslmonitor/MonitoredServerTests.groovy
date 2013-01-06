@@ -31,20 +31,24 @@ class MonitoredServerTests {
 
         def newService = new MonitoredServer()
         assertFalse newService.validate()
-        assertEquals ('Name must not be nullable.', 'nullable', newService.errors['name'])
-        assertEquals ('Hostname must not be nullable.', 'nullable', newService.errors['hostname'])
+        assertEquals 'Name must not be nullable.', 'nullable', newService.errors['name']
+        assertEquals 'Hostname must not be nullable.', 'nullable', newService.errors['hostname']
 
-        newService.name = 'Unique Service'
+        newService.name =''
         newService.hostname = ''
         newService.port = -1
         assertFalse newService.validate()
-        assertEquals ('Name must be unique', 'unique', newService.errors['name'])
-        assertEquals ('Hostname must not be blank.', 'blank', newService.errors['hostname'])
-        assertEquals ('Port must not be negative.', 'min', newService.errors['port'])
+        assertEquals 'Name must not be blank', 'blank', newService.errors['name']
+        assertEquals 'Hostname must not be blank.', 'blank', newService.errors['hostname']
+        assertEquals 'Port must not be negative.', 'min', newService.errors['port']
 
-        newService.name = 'New Service'
+        newService.name = 'Unique Service'
         newService.hostname = 'localhost'
         newService.port = 443
-        assertTrue newService.validate( )
+        assertFalse newService.validate()
+        assertEquals 'Name must be unique', 'unique', newService.errors['name']
+
+        newService.name = 'New Service'
+        assertTrue newService.validate()
     }
 }

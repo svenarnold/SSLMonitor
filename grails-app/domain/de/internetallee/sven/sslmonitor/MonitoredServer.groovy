@@ -32,7 +32,7 @@ class MonitoredServer {
     static hasMany = [certificateInformationChain: X509CertificateInformation]
 
     static constraints = {
-        name(unique: true)
+        name(blank: false, unique: true)
         description(nullable: true)
         hostname(blank: false)
         port(min: 0)
