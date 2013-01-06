@@ -8,7 +8,12 @@ class CertificateServiceIntegrationTests {
     def certificateService
 
     @Test
-    void testUpdateAllCertificateChains() {
+    void testUpdateAllCertificateChainsWithoutServers() {
+        certificateService.updateAllCertificateChains()
+    }
+
+    @Test
+    void testUpdateAllCertificateChainsDoesNotDuplicateData() {
         def server = new MonitoredServer(name: 'GitHub', hostname: 'github.com', port: 443)
         assert server.save()
 

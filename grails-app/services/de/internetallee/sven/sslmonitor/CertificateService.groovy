@@ -60,12 +60,12 @@ class CertificateService {
     }
 
     def updateAllCertificateChains() {
-        MonitoredServer.findAll().each { server ->
+        MonitoredServer.list().each { server ->
             if (server.certificateInformationChain)
                 server.certificateInformationChain.clear()
-            else
-                server.certificateInformationChain = []
-            server.certificateInformationChain.addAll(getX509CertificatesInformation(server))
+            getX509CertificatesInformation(server).each {
+                server.addToCertificateInformationChain(it)
+            }
             server.save()
         }
     }
