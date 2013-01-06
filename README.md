@@ -26,7 +26,7 @@ Additionally installed plugins are:
 ## Disclaimer
 
 SSLMonitor is built for the author's own purpose and learning fun. It is not meant to be used in a production
-environment. Therefore it is shared in case somebody else find it useful as an example. No kind of warranty is given to
+environment. Therefore it is shared in case somebody else finds it useful as an example. No kind of warranty is given to
 anyone.
 
 ## License
@@ -35,4 +35,4 @@ SSLMonitor is licensed under the GNU Public License Version 3 or (at your option
 
 ## Author
 
-Sven Arnold <sven at internetallee dot de>
+Sven Arnold < sven at internetallee dot de >
