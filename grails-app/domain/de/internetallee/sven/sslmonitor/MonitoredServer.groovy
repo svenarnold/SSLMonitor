@@ -26,6 +26,9 @@ class MonitoredServer {
     String hostname
     int port
 
+    boolean connectionSuccess = true
+    String lastError = ''
+
     List certificateInformationChain
 
     static hasMany = [certificateInformationChain: X509CertificateInformation]
@@ -34,6 +37,7 @@ class MonitoredServer {
         name(blank: false, unique: true)
         hostname(blank: false)
         port(min: 0)
+        lastError(nullable: true)
     }
 
     static mapping = {

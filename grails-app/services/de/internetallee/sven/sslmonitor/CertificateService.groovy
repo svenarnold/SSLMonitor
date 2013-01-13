@@ -85,9 +85,23 @@ class CertificateService {
                 getX509CertificatesInformation(server).each {
                     server.addToCertificateInformationChain(it)
                 }
+                server.connectionSuccess = true
+                server.lastError = ''
             } catch (Exception e) {
                 log.warn('Exception caught while trying to retrieve certificate information', e)
                 org.apache.log4j.LogManager.getLogger("StackTrace").error ('Exception caught while trying to retrieve certificate information:', e)
+                switch (e) {
+                    case SocketTimeoutException:
+                        server.lastError = 'Socket Timeout'
+                        break
+                    case UnknownHostException:
+                        server.lastError = 'Host Unknown'
+                        break
+                    default:
+                        server.lastError = e.toString()
+                        break
+                }
+                server.connectionSuccess = false
             }
             server.save()
         }
