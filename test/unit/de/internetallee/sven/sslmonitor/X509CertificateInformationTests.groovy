@@ -12,35 +12,43 @@ import org.junit.*
 class X509CertificateInformationTests {
 
     void testConstraints() {
-        mockForConstraintsTests(X509CertificateInformation)
 
-        def certInfo = new X509CertificateInformation()
-        assertFalse certInfo.validate()
-        assertEquals 'Subject principal must not be null', 'nullable', certInfo.errors['subjectPrincipal']
-        assertEquals 'Issuer DN must not be null', 'nullable', certInfo.errors['issuerDN']
-        assertEquals 'SHA1 fingerprint must not be null', 'nullable', certInfo.errors['sha1Fingerprint']
-        assertEquals 'MD5 fingerprint must not be null', 'nullable', certInfo.errors['md5Fingerprint']
-        assertEquals 'Valid not before must not be null', 'nullable', certInfo.errors['validNotBefore']
-        assertEquals 'Valid not after must not be null', 'nullable', certInfo.errors['validNotAfter']
-        assertEquals 'Server must not be null', 'nullable', certInfo.errors['server']
+        def certInfo = new X509CertificateInformation(
+                subjectPrincipal: '', issuerDN: '',
+                sha1Fingerprint: 'sha1', md5Fingerprint: 'md5',
+                validNotBefore: new Date(),
+                validNotAfter: new Date()
+        )
 
-        certInfo.subjectPrincipal = ''
-        certInfo.issuerDN = ''
-        certInfo.sha1Fingerprint = ''
-        certInfo.md5Fingerprint = ''
-        certInfo.validNotBefore = new Date()
-        certInfo.validNotAfter = new Date()
-        certInfo.server = new MonitoredServer(name: 'A Server', hostname: 'localhost', port: 443)
-        assertFalse certInfo.validate()
-        assertEquals 'Subject principal must not be blank', 'blank', certInfo.errors['subjectPrincipal']
-        assertEquals 'Issuer DN must not be blank', 'blank', certInfo.errors['issuerDN']
-        assertEquals 'SHA1 fingerprint must not be blank', 'blank', certInfo.errors['sha1Fingerprint']
-        assertEquals 'MD5 fingerprint must not be blank', 'blank', certInfo.errors['md5Fingerprint']
+        mockForConstraintsTests(X509CertificateInformation, [certInfo])
 
-        certInfo.subjectPrincipal ='x'
-        certInfo.issuerDN = 'x'
-        certInfo.sha1Fingerprint = 'x'
-        certInfo.md5Fingerprint = 'x'
-        assertTrue certInfo.validate()
+        def newCertInfo = new X509CertificateInformation()
+        assertFalse newCertInfo.validate()
+        assertEquals 'Subject principal must not be null', 'nullable', newCertInfo.errors['subjectPrincipal']
+        assertEquals 'Issuer DN must not be null', 'nullable', newCertInfo.errors['issuerDN']
+        assertEquals 'SHA1 fingerprint must not be null', 'nullable', newCertInfo.errors['sha1Fingerprint']
+        assertEquals 'MD5 fingerprint must not be null', 'nullable', newCertInfo.errors['md5Fingerprint']
+        assertEquals 'Valid not before must not be null', 'nullable', newCertInfo.errors['validNotBefore']
+        assertEquals 'Valid not after must not be null', 'nullable', newCertInfo.errors['validNotAfter']
+        assertEquals 'Server must not be null', 'nullable', newCertInfo.errors['server']
+
+        newCertInfo.subjectPrincipal = ''
+        newCertInfo.issuerDN = ''
+        newCertInfo.sha1Fingerprint = 'sha1'
+        newCertInfo.md5Fingerprint = 'md5'
+        newCertInfo.validNotBefore = new Date()
+        newCertInfo.validNotAfter = new Date()
+        newCertInfo.server = new MonitoredServer(name: 'A Server', hostname: 'localhost', port: 443)
+        assertFalse newCertInfo.validate()
+        assertEquals 'Subject principal must not be blank', 'blank', newCertInfo.errors['subjectPrincipal']
+        assertEquals 'Issuer DN must not be blank', 'blank', newCertInfo.errors['issuerDN']
+        assertEquals 'SHA1 fingerprint must be unique', 'unique', newCertInfo.errors['sha1Fingerprint']
+        assertEquals 'MD5 fingerprint must be', 'unique', newCertInfo.errors['md5Fingerprint']
+
+        newCertInfo.subjectPrincipal ='x'
+        newCertInfo.issuerDN = 'x'
+        newCertInfo.sha1Fingerprint = 'x'
+        newCertInfo.md5Fingerprint = 'x'
+        assertTrue newCertInfo.validate()
     }
 }
