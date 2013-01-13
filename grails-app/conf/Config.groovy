@@ -91,9 +91,9 @@ log4j = {
 }
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'de.internetallee.sven.sslmonitor.User'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'de.internetallee.sven.sslmonitor.UserRole'
-grails.plugins.springsecurity.authority.className = 'de.internetallee.sven.sslmonitor.Role'
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'de.internetallee.sven.sslmonitor.SecUser'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'de.internetallee.sven.sslmonitor.SecUserRole'
+grails.plugins.springsecurity.authority.className = 'de.internetallee.sven.sslmonitor.SecRole'
 grails.plugins.springsecurity.rejectIfNoRule = true
 grails.plugins.springsecurity.securityConfigType = "InterceptUrlMap"
 

@@ -1,6 +1,6 @@
 package de.internetallee.sven.sslmonitor
 
-class User {
+class SecUser {
 
 	transient springSecurityService
 
@@ -20,8 +20,8 @@ class User {
 		password column: '`password`'
 	}
 
-	Set<Role> getAuthorities() {
-		UserRole.findAllByUser(this).collect { it.role } as Set
+	Set<SecRole> getAuthorities() {
+		SecUserRole.findAllByUser(this).collect { it.role } as Set
 	}
 
 	def beforeInsert() {

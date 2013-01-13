@@ -1,6 +1,6 @@
 package de.internetallee.sven.sslmonitor
 
-class Role {
+class SecRole {
 
 	String authority
 
