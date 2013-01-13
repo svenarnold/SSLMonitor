@@ -1,8 +1,5 @@
 import de.internetallee.sven.sslmonitor.SecRole
-import de.internetallee.sven.sslmonitor.SecRole
 import de.internetallee.sven.sslmonitor.SecUser
-import de.internetallee.sven.sslmonitor.SecUser
-import de.internetallee.sven.sslmonitor.SecUserRole
 import de.internetallee.sven.sslmonitor.SecUserRole
 
 class BootStrap {
