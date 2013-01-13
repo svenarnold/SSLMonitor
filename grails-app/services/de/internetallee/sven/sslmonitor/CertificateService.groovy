@@ -79,10 +79,11 @@ class CertificateService {
 
     def updateAllCertificateChains() {
         MonitoredServer.list().each { server ->
-            if (server.certificateInformationChain)
-                server.certificateInformationChain.clear()
             try {
-                getX509CertificatesInformation(server).each {
+                def certificates = getX509CertificatesInformation(server)
+                if (server.certificateInformationChain)
+                    server.certificateInformationChain.clear()
+                certificates.each {
                     server.addToCertificateInformationChain(it)
                 }
                 server.connectionSuccess = true
