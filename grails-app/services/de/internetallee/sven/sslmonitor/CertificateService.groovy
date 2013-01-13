@@ -29,6 +29,8 @@ import java.security.cert.Certificate
 
 class CertificateService {
 
+    def grailsApplication
+
     private SSLSocketFactory sslSocketFactory
 
     def getSSLSocketFactory() {
@@ -55,7 +57,10 @@ class CertificateService {
 
     def getX509CertificatesInformation(MonitoredServer server) throws IOException, UnknownHostException {
 
-        SSLSocket sslSocket = getSSLSocketFactory().createSocket(server.hostname, server.port) as SSLSocket
+        def timeoutInMillis = grailsApplication.config.timeoutInMillis ?: 5000
+
+        SSLSocket sslSocket = getSSLSocketFactory().createSocket() as SSLSocket
+        sslSocket.connect(new InetSocketAddress(server.hostname, server.port), timeoutInMillis)
         sslSocket.startHandshake();
         SSLSession session = sslSocket.getSession();
 
@@ -82,6 +87,7 @@ class CertificateService {
                 }
             } catch (Exception e) {
                 log.warn('Exception caught while trying to retrieve certificate information', e)
+                org.apache.log4j.LogManager.getLogger("StackTrace").error ('Exception caught while trying to retrieve certificate information:', e)
             }
             server.save()
         }
