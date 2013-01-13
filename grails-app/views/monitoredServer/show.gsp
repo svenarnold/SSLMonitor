@@ -32,15 +32,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${monitoredServerInstance?.description}">
-				<li class="fieldcontain">
-					<span id="description-label" class="property-label"><g:message code="monitoredServer.description.label" default="Description" /></span>
-					
-						<span class="property-value" aria-labelledby="description-label"><g:fieldValue bean="${monitoredServerInstance}" field="description"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${monitoredServerInstance?.hostname}">
 				<li class="fieldcontain">
 					<span id="hostname-label" class="property-label"><g:message code="monitoredServer.hostname.label" default="Hostname" /></span>

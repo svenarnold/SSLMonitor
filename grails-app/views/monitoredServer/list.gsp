@@ -26,8 +26,6 @@
 					
 						<g:sortableColumn property="name" title="${message(code: 'monitoredServer.name.label', default: 'Name')}" />
 					
-						<g:sortableColumn property="description" title="${message(code: 'monitoredServer.description.label', default: 'Description')}" />
-					
 						<g:sortableColumn property="hostname" title="${message(code: 'monitoredServer.hostname.label', default: 'Hostname')}" />
 					
 						<g:sortableColumn property="port" title="${message(code: 'monitoredServer.port.label', default: 'Port')}" />
@@ -39,8 +37,6 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${monitoredServerInstance.id}">${fieldValue(bean: monitoredServerInstance, field: "name")}</g:link></td>
-					
-						<td>${fieldValue(bean: monitoredServerInstance, field: "description")}</td>
 					
 						<td>${fieldValue(bean: monitoredServerInstance, field: "hostname")}</td>
 					

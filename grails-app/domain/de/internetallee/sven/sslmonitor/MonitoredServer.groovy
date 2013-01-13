@@ -23,7 +23,6 @@ package de.internetallee.sven.sslmonitor
 class MonitoredServer {
 
     String name
-    String description
     String hostname
     int port
 
@@ -33,7 +32,6 @@ class MonitoredServer {
 
     static constraints = {
         name(blank: false, unique: true)
-        description(nullable: true)
         hostname(blank: false)
         port(min: 0)
     }

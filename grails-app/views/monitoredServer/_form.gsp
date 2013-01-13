@@ -10,14 +10,6 @@
 	<g:textField name="name" required="" value="${monitoredServerInstance?.name}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: monitoredServerInstance, field: 'description', 'error')} ">
-	<label for="description">
-		<g:message code="monitoredServer.description.label" default="Description" />
-		
-	</label>
-	<g:textField name="description" value="${monitoredServerInstance?.description}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: monitoredServerInstance, field: 'hostname', 'error')} required">
 	<label for="hostname">
 		<g:message code="monitoredServer.hostname.label" default="Hostname" />
