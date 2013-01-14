@@ -22,5 +22,9 @@ class CertificateServiceIntegrationTests {
 
         certificateService.updateAllCertificateChains()
         assertEquals 'There *still* must be exactly 2 certificates in the database', 2, X509CertificateInformation.count()
+
+        server.hostname = 'www.mozilla.org'
+        certificateService.updateAllCertificateChains()
+        assertEquals 'There must be exactly 3 certificates in the database', 3, X509CertificateInformation.count()
     }
 }

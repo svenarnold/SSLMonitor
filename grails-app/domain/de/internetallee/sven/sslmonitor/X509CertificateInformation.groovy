@@ -33,8 +33,8 @@ class X509CertificateInformation {
     static belongsTo = MonitoredServer
 
     static constraints = {
-        subjectPrincipal(blank: false)
-        issuerDN(blank: false)
+        subjectPrincipal(blank: false, maxSize: 1024)
+        issuerDN(blank: false, maxSize: 1024)
         sha1Fingerprint(unique: true)
         md5Fingerprint(unique: true)
         validNotBefore()
@@ -42,4 +42,14 @@ class X509CertificateInformation {
     }
 
     String toString() { "Subject: ${subjectPrincipal}\nIssuer: ${issuerDN}" }
+
+    @Override
+    int hashCode() {
+        return sha1Fingerprint.hashCode()
+    }
+
+    @Override
+    boolean equals(Object obj) {
+        (obj instanceof X509CertificateInformation) ? sha1Fingerprint.equals(obj.sha1Fingerprint) : false
+    }
 }

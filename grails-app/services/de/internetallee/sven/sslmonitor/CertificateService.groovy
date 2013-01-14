@@ -34,7 +34,7 @@ class CertificateService {
     private SSLSocketFactory sslSocketFactory
 
     def getSSLSocketFactory() {
-        if (! sslSocketFactory) {
+        if (!sslSocketFactory) {
             SSLContext insecureSSLContext = SSLContext.getInstance("TLS")
             def insecureTrustManager = new InsecureTrustManager()
             insecureSSLContext.init(null, (TrustManager[]) [insecureTrustManager].toArray(), null)
@@ -81,16 +81,17 @@ class CertificateService {
         MonitoredServer.list().each { server ->
             try {
                 def certificates = getX509CertificatesInformation(server)
-                if (server.certificateInformationChain)
-                    server.certificateInformationChain.clear()
-                certificates.each {
+                if (server.certificateInformationChain) {
+                    server.certificateInformationChain.removeAll { !certificates.contains(it) }
+                }
+                certificates.findAll{!server.certificateInformationChain?.contains(it)}.each {
                     server.addToCertificateInformationChain(it)
                 }
                 server.connectionSuccess = true
                 server.lastError = ''
             } catch (Exception e) {
                 log.warn('Exception caught while trying to retrieve certificate information', e)
-                org.apache.log4j.LogManager.getLogger("StackTrace").error ('Exception caught while trying to retrieve certificate information:', e)
+                org.apache.log4j.LogManager.getLogger("StackTrace").error('Exception caught while trying to retrieve certificate information:', e)
                 switch (e) {
                     case SocketTimeoutException:
                         server.lastError = 'Socket Timeout'
@@ -99,7 +100,7 @@ class CertificateService {
                         server.lastError = 'Host Unknown'
                         break
                     default:
-                        server.lastError = e.toString()
+                        server.lastError = e.toString().truncate(255)
                         break
                 }
                 server.connectionSuccess = false
