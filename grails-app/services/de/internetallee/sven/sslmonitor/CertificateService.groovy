@@ -78,6 +78,7 @@ class CertificateService {
     }
 
     def updateAllCertificateChains() {
+        log.info ("Updating all certificates.")
         MonitoredServer.list().each { server ->
             try {
                 def certificates = getX509CertificatesInformation(server)
