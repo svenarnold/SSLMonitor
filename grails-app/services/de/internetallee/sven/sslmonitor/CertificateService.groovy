@@ -19,6 +19,8 @@
 
 package de.internetallee.sven.sslmonitor
 
+import org.joda.time.DateTime
+
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSession
 import javax.net.ssl.SSLSocket
@@ -71,8 +73,8 @@ class CertificateService {
                     issuerDN: cert.issuerDN.name,
                     sha1Fingerprint: sha1HexString(cert.encoded),
                     md5Fingerprint: md5HexString(cert.encoded),
-                    validNotBefore: cert.notBefore,
-                    validNotAfter: cert.notAfter
+                    validNotBefore: new DateTime(cert.notBefore),
+                    validNotAfter: new DateTime(cert.notAfter)
             )
         }
     }

@@ -19,14 +19,16 @@
 
 package de.internetallee.sven.sslmonitor
 
+import org.joda.time.DateTime
+
 class X509CertificateInformation {
 
     String subjectPrincipal
     String issuerDN
     String sha1Fingerprint
     String md5Fingerprint
-    Date validNotBefore
-    Date validNotAfter
+    DateTime validNotBefore
+    DateTime validNotAfter
 
     MonitoredServer server
 

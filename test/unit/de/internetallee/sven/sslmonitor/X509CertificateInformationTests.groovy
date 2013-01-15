@@ -3,7 +3,7 @@ package de.internetallee.sven.sslmonitor
 
 
 import grails.test.mixin.*
-import org.junit.*
+import org.joda.time.DateTime
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
@@ -16,8 +16,8 @@ class X509CertificateInformationTests {
         def certInfo = new X509CertificateInformation(
                 subjectPrincipal: '', issuerDN: '',
                 sha1Fingerprint: 'sha1', md5Fingerprint: 'md5',
-                validNotBefore: new Date(),
-                validNotAfter: new Date()
+                validNotBefore: new DateTime(),
+                validNotAfter: new DateTime()
         )
 
         mockForConstraintsTests(X509CertificateInformation, [certInfo])
@@ -36,8 +36,8 @@ class X509CertificateInformationTests {
         newCertInfo.issuerDN = ''
         newCertInfo.sha1Fingerprint = 'sha1'
         newCertInfo.md5Fingerprint = 'md5'
-        newCertInfo.validNotBefore = new Date()
-        newCertInfo.validNotAfter = new Date()
+        newCertInfo.validNotBefore = new DateTime()
+        newCertInfo.validNotAfter = new DateTime()
         newCertInfo.server = new MonitoredServer(name: 'A Server', hostname: 'localhost', port: 443)
         assertFalse newCertInfo.validate()
         assertEquals 'Subject principal must not be blank', 'blank', newCertInfo.errors['subjectPrincipal']
