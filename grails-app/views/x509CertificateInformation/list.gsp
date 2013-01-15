@@ -1,5 +1,7 @@
 
 <%@ page import="de.internetallee.sven.sslmonitor.X509CertificateInformation" %>
+<%@ page import="org.joda.time.DateTime" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -42,8 +44,8 @@
 
                         <td>${x509CertificateInformationInstance.issuerDN?.truncate(20).encodeAsHTML()}</td>
 
-						<td><g:formatDate date="${x509CertificateInformationInstance.validNotAfter}" /></td>
-					
+                        <td>${x509CertificateInformationInstance.validNotAfter.toString("YYYY-mm-dd")}</td>
+
                         <td>${x509CertificateInformationInstance.server?.hostname}:${x509CertificateInformationInstance.server?.port}</td>
 
 					</tr>

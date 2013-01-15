@@ -20,6 +20,7 @@
 package de.internetallee.sven.sslmonitor
 
 import org.joda.time.DateTime
+import org.joda.time.Period
 
 class X509CertificateInformation {
 
@@ -41,6 +42,13 @@ class X509CertificateInformation {
         md5Fingerprint(unique: true)
         validNotBefore()
         validNotAfter()
+    }
+
+    static namedQueries = {
+        certificatesDueInDays { days ->
+            def dueDate = new DateTime().plus(Period.days(days))
+            lte 'validNotAfter', dueDate
+        }
     }
 
     String toString() { "Subject: ${subjectPrincipal}\nIssuer: ${issuerDN}" }

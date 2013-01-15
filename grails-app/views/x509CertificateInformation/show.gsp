@@ -62,7 +62,7 @@
 				<li class="fieldcontain">
 					<span id="validNotBefore-label" class="property-label"><g:message code="x509CertificateInformation.validNotBefore.label" default="Valid Not Before" /></span>
 					
-						<span class="property-value" aria-labelledby="validNotBefore-label"><g:formatDate date="${x509CertificateInformationInstance?.validNotBefore}" /></span>
+						<span class="property-value" aria-labelledby="validNotBefore-label">${x509CertificateInformationInstance?.validNotBefore}</span>
 					
 				</li>
 				</g:if>
@@ -71,8 +71,8 @@
 				<li class="fieldcontain">
 					<span id="validNotAfter-label" class="property-label"><g:message code="x509CertificateInformation.validNotAfter.label" default="Valid Not After" /></span>
 					
-						<span class="property-value" aria-labelledby="validNotAfter-label"><g:formatDate date="${x509CertificateInformationInstance?.validNotAfter}" /></span>
-					
+						<span class="property-value" aria-labelledby="validNotAfter-label">${x509CertificateInformationInstance?.validNotAfter}</span>
+
 				</li>
 				</g:if>
 			

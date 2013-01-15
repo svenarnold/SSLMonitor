@@ -28,4 +28,15 @@ class X509CertificateInformationController {
         certificateService.updateAllCertificateChains()
         redirect(action: 'list')
     }
+
+    def checkDueCertificates(Integer days) {
+        days = days ?: 0
+        def dueCertificates = X509CertificateInformation.certificatesDueInDays(days)
+        render(
+                model: [
+                        x509CertificateInformationInstanceList: dueCertificates.list(),
+                        x509CertificateInformationInstanceTotal: dueCertificates.count()],
+                view: 'list'
+        )
+    }
 }
