@@ -19,15 +19,32 @@
 
 package de.internetallee.sslmonitor
 
+import org.codehaus.groovy.grails.commons.ConfigurationHolder as ConfigHolder
+import de.internetallee.sven.sslmonitor.X509CertificateInformation
+
 class CheckCertificatesJob {
 
+    def grailsApplication
     def certificateService
+    def mailService
+    def groovyPageRenderer
 
     static triggers = {
-      simple repeatInterval: 5000l // execute job once in 5 seconds
+
+        cron cronExpression: ConfigHolder.config.sslMonitor?.cron?: "0 0 8 * * ?", startDelay: 10000
     }
 
     def execute() {
         certificateService.updateAllCertificateChains()
+        def days = grailsApplication?.config?.sslMonitor?.notification?.intervalInDays ?: 30
+        def certificatesQuery = X509CertificateInformation.certificatesDueInDays(days)
+        if (certificatesQuery.count() > 0) {
+            log.info("At least one certificate triggers notification.")
+            mailService.sendMail {
+                to grailsApplication?.config?.sslMonitor?.notification?.recipient ?: 'root@localhost'
+                subject "*** SSLMonitor Notification - ${certificatesQuery.count()} certificate(s) need your attention ***"
+                html groovyPageRenderer.render([view: '/x509CertificateInformation/alert', model: [certificates: certificatesQuery.list()]])
+            }
+        }
     }
 }

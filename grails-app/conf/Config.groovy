@@ -129,3 +129,7 @@ grails.gorm.default.mapping = {
 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentYearMonthDay, class: org.joda.time.YearMonthDay
 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentYears, class: org.joda.time.Years
 }
+
+sslMonitor.timeoutInMillis = 5000
+sslMonitor.notification.intervalInDays = 60
+sslMonitor.notification.recipient = 'root@localhost'
