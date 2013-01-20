@@ -59,7 +59,8 @@ class CertificateService {
 
     def getX509CertificatesInformation(MonitoredServer server) throws IOException, UnknownHostException {
 
-        def timeoutInMillis = grailsApplication.config.timeoutInMillis ?: 5000
+        def timeoutInMillis = grailsApplication.config.sslMonitor.timeoutInMillis ?: 5000
+        log.debug("Socket timeout set to ${timeoutInMillis} milliseconds.")
 
         SSLSocket sslSocket = getSSLSocketFactory().createSocket() as SSLSocket
         sslSocket.connect(new InetSocketAddress(server.hostname, server.port), timeoutInMillis)

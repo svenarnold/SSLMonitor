@@ -12,7 +12,7 @@ class BootStrap {
         log.info("Application Version: " + grailsApplication.metadata['app.version'])
         log.info("Grails Version:      " + grailsApplication.metadata['app.grails.version'])
 
-        def timeoutInMillis = grailsApplication.config.timeoutInMillis
+        def timeoutInMillis = grailsApplication.config.sslMonitor.timeoutInMillis
         if (timeoutInMillis) log.info("Configured Socket Timeout: " + timeoutInMillis  + "ms")
 
         String.metaClass.truncate = { maxLength ->
