@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
+        mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
 
@@ -63,5 +63,6 @@ grails.project.dependency.resolution = {
         compile ':joda-time:1.4'
         compile ':spring-security-core:1.2.7.3'
         compile ':quartz:1.0-RC5'
+        compile ':mail:1.0.1'
     }
 }
