@@ -22,6 +22,8 @@ SSLMonitor is built upon and uses the GRAILS framework (http://www.grails.org).
 
 Additionally installed plugins are:
 - spring-security-core (http://grails.org/plugin/spring-security-core)
+- quartz (http://grails.org/plugin/quartz)
+- mail (http://grails.org/plugin/mail)
 
 ## Disclaimer
 
