@@ -8,7 +8,7 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        log.info("Initializing ${grailsApplication.metadata['app.ame']}")
+        log.info("Initializing ${grailsApplication.metadata['app.name']}")
         log.info("Application Version: " + grailsApplication.metadata['app.version'])
         log.info("Grails Version:      " + grailsApplication.metadata['app.grails.version'])
 
