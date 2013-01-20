@@ -19,14 +19,12 @@
 
 package de.internetallee.sven.sslmonitor
 
-import junit.framework.Assert
 import org.joda.time.DateTime
 import org.joda.time.Period
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-import static junit.framework.Assert.*
 import static junit.framework.Assert.assertEquals
 import static junit.framework.Assert.assertTrue
 
