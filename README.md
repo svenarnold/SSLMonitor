@@ -8,6 +8,7 @@ to determine any certificates that are short before running out of date.
 
 - Manage a list of servers that provide SSL sockets
 - Fetch certificates from this servers and display their period of validity
+- Notify user when certificates are about to expire
 
 ## Installation and Usage Instructions
 
@@ -15,6 +16,8 @@ To built the application a working Grails environment is needed. The application
 was developed using Grails 2.2 and Java 7 but should work with earlier versions of both Grails and JDK also.
 
 Make sure to setup credentials in BootStrap.groovy.
+
+HTML documentation can be created by running "grails doc".
 
 ## Acknowledgments
 
