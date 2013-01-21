@@ -32,38 +32,30 @@ class X509CertificateInformationIntegrationTests {
 
     @Before
     void setUp() {
-        def monitoredServer = new MonitoredServer(
-                name: 'example',
-                hostname: 'host',
-                port: 443
-        )
-        assert monitoredServer.save()
-
         def currentDateTime = new DateTime()
+        def monitoredServer = new MonitoredServer(name: 'example', hostname: 'host', port: 443)
 
-        def cert0 = new X509CertificateInformation(
+        monitoredServer.addToCertificateInformationChain(
                 subjectPrincipal: 'cert0', issuerDN: 'me',
                 sha1Fingerprint: 'cert0sha1', md5Fingerprint: 'cert0md5',
                 validNotBefore: currentDateTime,
                 validNotAfter: currentDateTime.plus(Period.days(9)),
         )
-        monitoredServer.addToCertificateInformationChain(cert0)
 
-        def cert1 = new X509CertificateInformation(
+        monitoredServer.addToCertificateInformationChain(
                 subjectPrincipal: 'cert1', issuerDN: 'me',
                 sha1Fingerprint: 'cert1sha1', md5Fingerprint: 'cert1md5',
                 validNotBefore: currentDateTime,
                 validNotAfter: currentDateTime.plus(Period.days(10))
         )
-        monitoredServer.addToCertificateInformationChain(cert1)
 
-        def cert2 = new X509CertificateInformation(
+        monitoredServer.addToCertificateInformationChain(
                 subjectPrincipal: 'cert2', issuerDN: 'me',
                 sha1Fingerprint: 'cert2sha1', md5Fingerprint: 'cert2md5',
                 validNotBefore: currentDateTime,
                 validNotAfter: currentDateTime.plus(Period.days(11))
         )
-        monitoredServer.addToCertificateInformationChain(cert2)
+
         assert monitoredServer.save()
     }
 
@@ -73,10 +65,21 @@ class X509CertificateInformationIntegrationTests {
     }
 
     @Test
-    void testCertificatesDueInDays() {
-        def dueCerts = X509CertificateInformation.certificatesDueInDays(10)
-        assertEquals 'Two certificates should be due.', 2, dueCerts.count()
-        assertTrue 'Cert0 should be due.', dueCerts.list().contains(X509CertificateInformation.findBySubjectPrincipal('cert0'))
+    void testSetup() {
+        assertEquals 1, MonitoredServer.count()
+        assertEquals 3, X509CertificateInformation.count()
     }
 
+    @Test
+    void testCertificatesDueInDays() {
+        assertEquals 'All three certificates should be due in 11 days.', 3, X509CertificateInformation.certificatesDueInDays(11).count()
+
+        def dueCerts = X509CertificateInformation.certificatesDueInDays(10)
+        assertEquals 'Two certificates should be due in 10 days.', 2, dueCerts.count()
+        assertTrue 'Cert0 should be due in 10 days.', dueCerts.list().contains(X509CertificateInformation.findBySubjectPrincipal('cert0'))
+
+        assertEquals 'Only one certificate should be due in 9 days.', 1, X509CertificateInformation.certificatesDueInDays(9).count()
+
+        assertEquals 'All certificates should be ok for the next 8 days.', 0, X509CertificateInformation.certificatesDueInDays(8).count()
+    }
 }
