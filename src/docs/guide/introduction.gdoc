@@ -1,0 +1,12 @@
+h2. About SSLMonitor
+
+SSLMonitor is Simple GRAILS application to check SSL certificates of running services. The goal is to have a simple way
+to determine any certificates that are short before running out of date.
+
+h2. Features
+
+- Manage a list of servers that provide SSL sockets
+- Fetch certificates from this servers and display their period of validity
+- Notify user when certificates are about to expire
+
+
