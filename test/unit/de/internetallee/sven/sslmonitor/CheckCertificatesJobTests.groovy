@@ -36,8 +36,6 @@ class CheckCertificatesJobTests {
 
     @Before
     def void setUp() {
-        grailsApplication.config.sslMonitor.notification.intervalInDays = 10
-
         def currentDateTime = new DateTime()
         def monitoredServer = new MonitoredServer(name: 'example', hostname: 'host', port: 443)
 
@@ -45,16 +43,8 @@ class CheckCertificatesJobTests {
                 subjectPrincipal: 'cert0', issuerDN: 'me',
                 sha1Fingerprint: 'cert0sha1', md5Fingerprint: 'cert0md5',
                 validNotBefore: currentDateTime,
-                validNotAfter: currentDateTime.plus(Period.days(9)),
+                validNotAfter: currentDateTime.plus(Period.days(50)),
         )
-
-        monitoredServer.addToCertificateInformationChain(
-                subjectPrincipal: 'cert1', issuerDN: 'me',
-                sha1Fingerprint: 'cert1sha1', md5Fingerprint: 'cert1md5',
-                validNotBefore: currentDateTime,
-                validNotAfter: currentDateTime.plus(Period.days(10))
-        )
-
         assert monitoredServer.save()
     }
 
@@ -65,17 +55,36 @@ class CheckCertificatesJobTests {
     }
 
     @Test
-    def void testExecute() {
+    def void testExecuteAllCertificatesOk() {
         def certificateServiceMockControl = mockFor(CertificateService)
-        certificateServiceMockControl.demand.updateAllCertificateChains(1) {}
-
         def mailServiceMockControl = mockFor(MailService)
-        mailServiceMockControl.demand.sendMail(1) { to, subject, html -> }
 
         def job = new CheckCertificatesJob()
+
+        certificateServiceMockControl.demand.updateAllCertificateChains(1) {}
+        mailServiceMockControl.demand.sendMail(0) { }
         job.certificateService = certificateServiceMockControl.createMock()
         job.mailService = mailServiceMockControl.createMock()
 
+        job.execute()
+
+        certificateServiceMockControl.verify()
+        mailServiceMockControl.verify()
+    }
+
+    @Test
+    def void testExecuteCertificatesNeedsAttention() {
+        def certificateServiceMockControl = mockFor(CertificateService)
+        def mailServiceMockControl = mockFor(MailService)
+
+        def job = new CheckCertificatesJob()
+        certificateServiceMockControl.demand.updateAllCertificateChains(1) {}
+        mailServiceMockControl.demand.sendMail(1) { }
+        job.certificateService = certificateServiceMockControl.createMock()
+        job.mailService = mailServiceMockControl.createMock()
+
+        grailsApplication.config.sslMonitor.notification.intervalInDays = 50
+        job.grailsApplication = grailsApplication
         job.execute()
 
         certificateServiceMockControl.verify()
