@@ -60,7 +60,7 @@ class CertificateService {
     def getX509CertificatesInformation(MonitoredServer server) throws IOException, UnknownHostException {
 
         def timeoutInMillis = grailsApplication.config.sslMonitor.timeoutInMillis ?: 5000
-        log.debug("Socket timeout set to ${timeoutInMillis} milliseconds.")
+        log.debug("  Socket timeout set to ${timeoutInMillis} milliseconds.")
 
         SSLSocket sslSocket = getSSLSocketFactory().createSocket() as SSLSocket
         sslSocket.connect(new InetSocketAddress(server.hostname, server.port), timeoutInMillis)
@@ -84,11 +84,14 @@ class CertificateService {
         log.info ("Updating all certificates.")
         MonitoredServer.list().each { server ->
             try {
+                log.debug("Updating certificate info for server " + server.hostname)
                 def certificates = getX509CertificatesInformation(server)
                 if (server.certificateInformationChain) {
+                    log.debug("  Removing obsolete certificates")
                     server.certificateInformationChain.removeAll { !certificates.contains(it) }
                 }
                 certificates.findAll{!server.certificateInformationChain?.contains(it)}.each {
+                    log.debug("  Adding new certificate: " + it)
                     server.addToCertificateInformationChain(it)
                 }
                 server.connectionSuccess = true
