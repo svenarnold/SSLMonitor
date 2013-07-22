@@ -38,8 +38,8 @@ class X509CertificateInformation {
     static constraints = {
         subjectPrincipal(blank: false, maxSize: 1024)
         issuerDN(blank: false, maxSize: 1024)
-        sha1Fingerprint(unique: true)
-        md5Fingerprint(unique: true)
+        sha1Fingerprint()
+        md5Fingerprint()
         validNotBefore()
         validNotAfter()
     }
