@@ -112,7 +112,7 @@ class CertificateService {
                 }
                 server.connectionSuccess = false
             }
-            server.save()
+            server.save(flush: true)
         }
     }
 }
