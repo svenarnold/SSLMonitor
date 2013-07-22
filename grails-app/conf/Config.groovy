@@ -94,6 +94,7 @@ log4j = {
     environments {
         development {
             debug 'grails.app'
+            info 'grails.app.taglib.org.grails.plugin.resource'
         }
     }
 }
