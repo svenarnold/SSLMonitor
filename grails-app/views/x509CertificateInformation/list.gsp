@@ -44,7 +44,7 @@
 
                         <td>${x509CertificateInformationInstance.issuerDN?.truncate(20).encodeAsHTML()}</td>
 
-                        <td>${x509CertificateInformationInstance.validNotAfter.toString("YYYY-mm-dd")}</td>
+                        <td>${x509CertificateInformationInstance.validNotAfter.toString("YYYY-MM-dd")}</td>
 
                         <td>${x509CertificateInformationInstance.server?.hostname}:${x509CertificateInformationInstance.server?.port}</td>
 
