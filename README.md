@@ -13,7 +13,7 @@ to determine any certificates that are short before running out of date.
 ## Installation and Usage Instructions
 
 To built the application a working Grails environment is needed. The application itself should be self explaining. It
-was developed using Grails 2.2 and Java 7 but should work with earlier versions of both Grails and JDK also.
+was developed using Grails 2.3.4 and Java 7.
 
 Make sure to setup credentials in BootStrap.groovy.
 
