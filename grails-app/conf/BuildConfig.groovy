@@ -11,6 +11,7 @@ grails.project.source.level = 1.6
 //   run: [maxMemory:1024, minMemory:64, debug:false, maxPerm:256]
 //]
 
+grails.project.dependency.resolver = "maven"
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
@@ -46,7 +47,9 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
+        build ":tomcat:7.0.47"
+        runtime ":hibernate:3.6.10.6"
+
         runtime ":jquery:1.8.3"
         runtime ":resources:1.1.6"
 
@@ -55,11 +58,10 @@ grails.project.dependency.resolution = {
         //runtime ":cached-resources:1.0"
         //runtime ":yui-minify-resources:0.1.4"
 
-        build ":tomcat:$grailsVersion"
-
         runtime ":database-migration:1.3.2"
 
         compile ':cache:1.0.1'
+	compile ':scaffolding:1.0.0'
         compile ':joda-time:1.4'
         compile ':spring-security-core:1.2.7.3'
         compile ':quartz:1.0-RC5'
