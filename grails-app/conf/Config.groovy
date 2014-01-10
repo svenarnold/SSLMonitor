@@ -100,13 +100,13 @@ log4j = {
 }
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'de.internetallee.sven.sslmonitor.SecUser'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'de.internetallee.sven.sslmonitor.SecUserRole'
-grails.plugins.springsecurity.authority.className = 'de.internetallee.sven.sslmonitor.SecRole'
-grails.plugins.springsecurity.rejectIfNoRule = true
-grails.plugins.springsecurity.securityConfigType = "InterceptUrlMap"
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'de.internetallee.sven.sslmonitor.SecUser'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'de.internetallee.sven.sslmonitor.SecUserRole'
+grails.plugin.springsecurity.authority.className = 'de.internetallee.sven.sslmonitor.SecRole'
+grails.plugin.springsecurity.rejectIfNoRule = true
+grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 
-grails.plugins.springsecurity.interceptUrlMap = [
+grails.plugin.springsecurity.interceptUrlMap = [
         '/js/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/css/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/images/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
