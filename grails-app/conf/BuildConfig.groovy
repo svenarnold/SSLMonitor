@@ -51,7 +51,7 @@ grails.project.dependency.resolution = {
         build ":tomcat:7.0.47"
         runtime ":hibernate:3.6.10.6"
 
-        runtime ":jquery:1.8.3"
+        runtime ":jquery:1.10.2.2"
         runtime ":resources:1.1.6"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
