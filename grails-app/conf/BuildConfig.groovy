@@ -48,11 +48,11 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        build ":tomcat:7.0.47"
-        runtime ":hibernate:3.6.10.6"
+        build ":tomcat:7.0.52.1"
+        runtime ":hibernate:3.6.10.10"
 
-        runtime ":jquery:1.10.2.2"
-        runtime ":resources:1.2.1"
+        runtime ":jquery:1.11.0.1"
+        runtime ":resources:1.2.7"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
@@ -66,6 +66,6 @@ grails.project.dependency.resolution = {
         compile ':joda-time:1.4'
         compile ':spring-security-core:2.0-RC2'
         compile ':quartz:1.0.1'
-        compile ':mail:1.0.1'
+        compile ':mail:1.0.4'
     }
 }
