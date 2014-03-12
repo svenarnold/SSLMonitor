@@ -19,8 +19,8 @@
 
 package de.internetallee.sslmonitor
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as ConfigHolder
 import de.internetallee.sven.sslmonitor.X509CertificateInformation
+import grails.util.Holders
 
 class CheckCertificatesJob {
 
@@ -31,7 +31,8 @@ class CheckCertificatesJob {
 
     static triggers = {
 
-        cron cronExpression: ConfigHolder.config.sslMonitor?.cron?: "0 0 8 * * ?", startDelay: 10000
+        cron cronExpression: Holders.grailsApplication.config.sslMonitor?.cron?: "0 0 8 * * ?", startDelay: 10000
+
     }
 
     def execute() {
