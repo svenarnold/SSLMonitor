@@ -58,7 +58,7 @@
 
 <p><g:meta name="app.name"/> version <g:meta name="app.version"/></p>
 
-<p>&copy; 2013 Sven Arnold, get source code from <a href="https://github.com/svenarnold/SSLMonitor">github</a></p>
+<p>&copy; 2014 Sven Arnold, get source code from <a href="https://github.com/svenarnold/SSLMonitor">github</a></p>
 
 </body>
 </html>
