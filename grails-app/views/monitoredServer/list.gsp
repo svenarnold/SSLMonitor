@@ -29,6 +29,10 @@
 						<g:sortableColumn property="hostname" title="${message(code: 'monitoredServer.hostname.label', default: 'Hostname')}" />
 					
 						<g:sortableColumn property="port" title="${message(code: 'monitoredServer.port.label', default: 'Port')}" />
+
+                        <g:sortableColumn property="connectionSuccess" title="${message(code: 'monitoredServer.connectionSuccess.label', default: 'Connection')}" />
+
+                        <g:sortableColumn property="lastError" title="${message(code: 'monitoredServer.lastError.label', default: 'Error')}" />
 					
 					</tr>
 				</thead>
@@ -41,7 +45,11 @@
 						<td>${fieldValue(bean: monitoredServerInstance, field: "hostname")}</td>
 					
 						<td>${fieldValue(bean: monitoredServerInstance, field: "port")}</td>
-					
+
+                        <td>${fieldValue(bean: monitoredServerInstance, field: "connectionSuccess")}</td>
+
+                        <td>${fieldValue(bean: monitoredServerInstance, field: "lastError")}</td>
+
 					</tr>
 				</g:each>
 				</tbody>
