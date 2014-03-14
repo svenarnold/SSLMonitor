@@ -41,6 +41,7 @@ class CheckCertificatesJob {
         if (certificatesQuery.count() > 0) {
             log.info("At least one certificate triggers notification.")
             mailService.sendMail {
+                from grailsApplication?.config?.sslMonitor?.notification?.sender ?: 'sslMonitor@localhost'
                 to grailsApplication?.config?.sslMonitor?.notification?.recipient ?: 'root@localhost'
                 subject "*** SSLMonitor Notification - ${certificatesQuery.count()} certificate(s) need your attention ***"
                 body (view: '/x509CertificateInformation/alert', model: [certificates: certificatesQuery.list()])

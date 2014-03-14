@@ -134,6 +134,7 @@ grails.gorm.default.mapping = {
 
 sslMonitor.timeoutInMillis = 5000
 sslMonitor.notification.intervalInDays = 60
+sslMonitor.notification.sender = 'sslmonitor@localhost'
 sslMonitor.notification.recipient = 'root@localhost'
 
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements
