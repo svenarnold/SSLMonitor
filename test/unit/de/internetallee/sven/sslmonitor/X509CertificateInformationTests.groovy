@@ -42,8 +42,6 @@ class X509CertificateInformationTests {
         assertFalse newCertInfo.validate()
         assertEquals 'Subject principal must not be blank', 'blank', newCertInfo.errors['subjectPrincipal']
         assertEquals 'Issuer DN must not be blank', 'blank', newCertInfo.errors['issuerDN']
-        assertEquals 'SHA1 fingerprint must be unique', 'unique', newCertInfo.errors['sha1Fingerprint']
-        assertEquals 'MD5 fingerprint must be', 'unique', newCertInfo.errors['md5Fingerprint']
 
         newCertInfo.subjectPrincipal ='x'
         newCertInfo.issuerDN = 'x'
