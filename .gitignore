@@ -4,6 +4,7 @@ workspace.xml
 *Db.script
 .settings
 stacktrace.log
+grails-app/views/_git.gsp
 /*.zip
 /plugin.xml
 /*.log
