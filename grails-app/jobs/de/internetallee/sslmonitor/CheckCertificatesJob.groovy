@@ -27,7 +27,6 @@ class CheckCertificatesJob {
     def grailsApplication
     def certificateService
     def mailService
-    def groovyPageRenderer
 
     static triggers = {
 
@@ -44,7 +43,7 @@ class CheckCertificatesJob {
             mailService.sendMail {
                 to grailsApplication?.config?.sslMonitor?.notification?.recipient ?: 'root@localhost'
                 subject "*** SSLMonitor Notification - ${certificatesQuery.count()} certificate(s) need your attention ***"
-                html groovyPageRenderer.render([view: '/x509CertificateInformation/alert', model: [certificates: certificatesQuery.list()]])
+                body (view: '/x509CertificateInformation/alert', model: [certificates: certificatesQuery.list()])
             }
         }
     }

@@ -1,7 +1,7 @@
 %{--
   - This file is part of SSLMonitor
   -
-  - Copyright (c) 2013 Sven Arnold
+  - Copyright (c) 2014 Sven Arnold
   -
   - SSLMonitor is free software: you can redistribute it and/or modify
   - it under the terms of the GNU General Public License as published by
@@ -16,49 +16,22 @@
   - You should have received a copy of the GNU General Public License
   - along with SSLMonitor. If not, see <http://www.gnu.org/licenses/>.
   --}%
+<%@ page contentType="text/plain;charset=UTF-8" %>
+SSL Monitor Notification
 
-<%@ page contentType="text/html;charset=UTF-8" %>
-<html>
-<head>
-  <title>SSL Monitor Notification</title>
-</head>
+One or more ssl certificates need your attention:
 
-<body>
-<h1>SSL Monitor</h1>
+<g:each in="${certificates}" var="certificate" status="i">
+${certificate.server?.name}
+    Service:           ${certificate.server}
+    Subject Principal: ${certificate.subjectPrincipal}.truncate(20)
+    Valid not After:   ${certificate.validNotAfter}
+    Issuer DN:         ${certificate.issuerDN}.truncate(20)
+</g:each>
 
-<p>One or more ssl certificates need your attention:</p>
+You are receiving this email because you are registered as an administrative person in
+<g:meta name="app.name"/> (${grailsApplication?.config?.grails?.serverURL})
 
-<h1>Certificates</h1>
+<g:meta name="app.name"/> version <g:meta name="app.version"/>
 
-<table>
-  <thead>
-  <tr>
-    <th>Service</th>
-    <th>Subject Principal</th>
-    <th>Valid Not After</th>
-    <th>Issuer DN</th>
-  </tr>
-  </thead>
-  <tbody>
-  <g:each in="${certificates}" var="certificate" status="i">
-    <tr>
-      <td>${certificate.server}</td>
-      <td>${certificate.subjectPrincipal}.truncate(20)</td>
-      <td>${certificate.validNotAfter}</td>
-      <td>${certificate.issuerDN}.truncate(20)</td>
-    </tr>
-  </g:each>
-  </tbody>
-</table>
-
-<p>
-  You are receiving this email because you are registered as an administrative person in
-  <a href="${grailsApplication.config.grails.serverURL}"><g:meta name="app.name"/></a>
-</p>
-
-<p><g:meta name="app.name"/> version <g:meta name="app.version"/></p>
-
-<p>&copy; 2014 Sven Arnold, get source code from <a href="https://github.com/svenarnold/SSLMonitor">github</a></p>
-
-</body>
-</html>
+© 2014 Sven Arnold, source code available at: https://github.com/svenarnold/SSLMonitor
