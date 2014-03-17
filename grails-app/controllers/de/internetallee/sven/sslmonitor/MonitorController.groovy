@@ -2,7 +2,7 @@ package de.internetallee.sven.sslmonitor
 
 import org.springframework.dao.DataIntegrityViolationException
 
-class MonitoredServerController {
+class MonitorController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 

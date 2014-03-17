@@ -1,13 +1,10 @@
 package de.internetallee.sven.sslmonitor
 
-
-
-import org.junit.*
 import grails.test.mixin.*
 
-@TestFor(MonitoredServerController)
+@TestFor(MonitorController)
 @Mock(MonitoredServer)
-class MonitoredServerControllerTests {
+class MonitorControllerTests {
 
     def populateValidParams(params) {
         assert params != null

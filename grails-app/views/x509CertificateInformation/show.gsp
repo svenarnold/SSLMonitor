@@ -80,7 +80,7 @@
 				<li class="fieldcontain">
 					<span id="server-label" class="property-label"><g:message code="x509CertificateInformation.server.label" default="Server" /></span>
 					
-						<span class="property-value" aria-labelledby="server-label"><g:link controller="monitoredServer" action="show" id="${x509CertificateInformationInstance?.server?.id}">${x509CertificateInformationInstance?.server?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="server-label"><g:link controller="monitor" action="show" id="${x509CertificateInformationInstance?.server?.id}">${x509CertificateInformationInstance?.server?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

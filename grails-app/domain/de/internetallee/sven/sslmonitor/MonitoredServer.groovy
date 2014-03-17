@@ -19,7 +19,9 @@
 
 package de.internetallee.sven.sslmonitor
 
+import grails.rest.Resource
 
+@Resource(uri='/monitoredServices')
 class MonitoredServer {
 
     String name
