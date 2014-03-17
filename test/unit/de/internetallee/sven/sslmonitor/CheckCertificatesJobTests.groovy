@@ -31,13 +31,13 @@ import org.junit.Before
 import org.junit.Test
 
 @TestMixin(GrailsUnitTestMixin)
-@Mock([MonitoredServer, X509CertificateInformation, MailService])
+@Mock([MonitoredService, X509CertificateInformation, MailService])
 class CheckCertificatesJobTests {
 
     @Before
     def void setUp() {
         def currentDateTime = new DateTime()
-        def monitoredServer = new MonitoredServer(name: 'example', hostname: 'host', port: 443)
+        def monitoredServer = new MonitoredService(name: 'example', hostname: 'host', port: 443)
 
         monitoredServer.addToCertificateInformationChain(
                 subjectPrincipal: 'cert0', issuerDN: 'me',
@@ -50,7 +50,7 @@ class CheckCertificatesJobTests {
 
     @After
     def void tearDown() {
-        MonitoredServer.list().each { it.delete() }
+        MonitoredService.list().each { it.delete() }
         X509CertificateInformation.list().each { it.delete() }
     }
 

@@ -1,10 +1,10 @@
 
-<%@ page import="de.internetallee.sven.sslmonitor.MonitoredServer" %>
+<%@ page import="de.internetallee.sven.sslmonitor.MonitoredService" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'monitoredServer.label', default: 'MonitoredServer')}" />
+		<g:set var="entityName" value="${message(code: 'monitoredServer.label', default: 'MonitoredService')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>

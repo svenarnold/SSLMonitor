@@ -33,7 +33,7 @@ class X509CertificateInformationIntegrationTests {
     @Before
     void setUp() {
         def currentDateTime = new DateTime()
-        def monitoredServer = new MonitoredServer(name: 'example', hostname: 'host', port: 443)
+        def monitoredServer = new MonitoredService(name: 'example', hostname: 'host', port: 443)
 
         monitoredServer.addToCertificateInformationChain(
                 subjectPrincipal: 'cert0', issuerDN: 'me',
@@ -61,12 +61,12 @@ class X509CertificateInformationIntegrationTests {
 
     @After
     void tearDown() {
-        MonitoredServer.list().each { it.delete() }
+        MonitoredService.list().each { it.delete() }
     }
 
     @Test
     void testSetup() {
-        assertEquals 1, MonitoredServer.count()
+        assertEquals 1, MonitoredService.count()
         assertEquals 3, X509CertificateInformation.count()
     }
 

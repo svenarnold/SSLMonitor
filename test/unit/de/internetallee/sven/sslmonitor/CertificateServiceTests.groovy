@@ -6,7 +6,7 @@ import org.junit.*
 import javax.net.ssl.SSLSocketFactory
 
 @TestFor(CertificateService)
-@Mock([MonitoredServer, X509CertificateInformation])
+@Mock([MonitoredService, X509CertificateInformation])
 class CertificateServiceTests {
 
     @Test
@@ -29,7 +29,7 @@ class CertificateServiceTests {
 
     @Test
     void testGetX509CertificatesInformation() {
-        def certInfos = service.getX509CertificatesInformation(new MonitoredServer(name: 'GitHub', hostname: 'github.com', port: 443))
+        def certInfos = service.getX509CertificatesInformation(new MonitoredService(name: 'GitHub', hostname: 'github.com', port: 443))
         assertTrue (certInfos.size > 0)
         assertTrue (certInfos[0] instanceof X509CertificateInformation)
         assertTrue (certInfos[0].subjectPrincipal.startsWith('CN=github.com'))
@@ -38,6 +38,6 @@ class CertificateServiceTests {
 
     @Test(expected = UnknownHostException)
     void testGetX509CertificatesInformationThrowsUnknownHostException() {
-        service.getX509CertificatesInformation(new MonitoredServer(name: 'Unknonw', hostname: 'unknown.example.com', port: 443))
+        service.getX509CertificatesInformation(new MonitoredService(name: 'Unknonw', hostname: 'unknown.example.com', port: 443))
     }
 }

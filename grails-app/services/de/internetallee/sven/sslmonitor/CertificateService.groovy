@@ -57,7 +57,7 @@ class CertificateService {
         md5Digest.digest().encodeHex().toString()
     }
 
-    def getX509CertificatesInformation(MonitoredServer server) throws IOException, UnknownHostException {
+    def getX509CertificatesInformation(MonitoredService server) throws IOException, UnknownHostException {
 
         def timeoutInMillis = grailsApplication.config.sslMonitor.timeoutInMillis ?: 5000
         log.debug("  Socket timeout set to ${timeoutInMillis} milliseconds.")
@@ -82,7 +82,7 @@ class CertificateService {
 
     def updateAllCertificateChains() {
         log.info ("Updating all certificates.")
-        MonitoredServer.list().each { server ->
+        MonitoredService.list().each { server ->
             try {
                 log.debug("Updating certificate info for server " + server.hostname)
                 def certificates = getX509CertificatesInformation(server)

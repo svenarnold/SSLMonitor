@@ -3,7 +3,7 @@ package de.internetallee.sven.sslmonitor
 import grails.test.mixin.*
 
 @TestFor(MonitorController)
-@Mock(MonitoredServer)
+@Mock(MonitoredService)
 class MonitorControllerTests {
 
     def populateValidParams(params) {
@@ -46,7 +46,7 @@ class MonitorControllerTests {
 
         assert response.redirectedUrl == '/monitoredServer/show/1'
         assert controller.flash.message != null
-        assert MonitoredServer.count() == 1
+        assert MonitoredService.count() == 1
     }
 
     void testShow() {
@@ -56,7 +56,7 @@ class MonitorControllerTests {
         assert response.redirectedUrl == '/monitoredServer/list'
 
         populateValidParams(params)
-        def monitoredServer = new MonitoredServer(params)
+        def monitoredServer = new MonitoredService(params)
 
         assert monitoredServer.save() != null
 
@@ -74,7 +74,7 @@ class MonitorControllerTests {
         assert response.redirectedUrl == '/monitoredServer/list'
 
         populateValidParams(params)
-        def monitoredServer = new MonitoredServer(params)
+        def monitoredServer = new MonitoredService(params)
 
         assert monitoredServer.save() != null
 
@@ -94,7 +94,7 @@ class MonitorControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def monitoredServer = new MonitoredServer(params)
+        def monitoredServer = new MonitoredService(params)
 
         assert monitoredServer.save() != null
 
@@ -138,17 +138,17 @@ class MonitorControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def monitoredServer = new MonitoredServer(params)
+        def monitoredServer = new MonitoredService(params)
 
         assert monitoredServer.save() != null
-        assert MonitoredServer.count() == 1
+        assert MonitoredService.count() == 1
 
         params.id = monitoredServer.id
 
         controller.delete()
 
-        assert MonitoredServer.count() == 0
-        assert MonitoredServer.get(monitoredServer.id) == null
+        assert MonitoredService.count() == 0
+        assert MonitoredService.get(monitoredServer.id) == null
         assert response.redirectedUrl == '/monitoredServer/list'
     }
 }

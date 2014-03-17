@@ -31,9 +31,9 @@ class X509CertificateInformation {
     DateTime validNotBefore
     DateTime validNotAfter
 
-    MonitoredServer server
+    MonitoredService server
 
-    static belongsTo = MonitoredServer
+    static belongsTo = MonitoredService
 
     static constraints = {
         subjectPrincipal(blank: false, maxSize: 1024)

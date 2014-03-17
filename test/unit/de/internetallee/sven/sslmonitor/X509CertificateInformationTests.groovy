@@ -38,7 +38,7 @@ class X509CertificateInformationTests {
         newCertInfo.md5Fingerprint = 'md5'
         newCertInfo.validNotBefore = new DateTime()
         newCertInfo.validNotAfter = new DateTime()
-        newCertInfo.server = new MonitoredServer(name: 'A Server', hostname: 'localhost', port: 443)
+        newCertInfo.server = new MonitoredService(name: 'A Server', hostname: 'localhost', port: 443)
         assertFalse newCertInfo.validate()
         assertEquals 'Subject principal must not be blank', 'blank', newCertInfo.errors['subjectPrincipal']
         assertEquals 'Issuer DN must not be blank', 'blank', newCertInfo.errors['issuerDN']
