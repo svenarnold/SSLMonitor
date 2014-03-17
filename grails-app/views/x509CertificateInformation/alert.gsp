@@ -20,14 +20,22 @@
 SSL Monitor Notification
 
 One or more ssl certificates need your attention:
-
 <g:each in="${certificates}" var="certificate" status="i">
-${certificate.server?.name}
-    Service:           ${certificate.server}
-    Subject Principal: ${certificate.subjectPrincipal}.truncate(20)
-    Valid not After:   ${certificate.validNotAfter}
-    Issuer DN:         ${certificate.issuerDN}.truncate(20)
+
+=== ${certificate.server?.name} ===
+Service:
+${certificate.server}
+
+Subject Principal:
+${certificate.subjectPrincipal}
+
+Valid not After:
+${certificate.validNotAfter}
+
+Issuer DN:
+${certificate.issuerDN}
 </g:each>
+
 
 You are receiving this email because you are registered as an administrative person in
 <g:meta name="app.name"/> (${grailsApplication?.config?.grails?.serverURL})
