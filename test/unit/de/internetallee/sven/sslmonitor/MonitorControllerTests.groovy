@@ -3,7 +3,7 @@ package de.internetallee.sven.sslmonitor
 import grails.test.mixin.*
 
 @TestFor(MonitorController)
-@Mock(MonitoredService)
+@Mock(MonitoredServer)
 class MonitorControllerTests {
 
     def populateValidParams(params) {
@@ -16,7 +16,7 @@ class MonitorControllerTests {
 
     void testIndex() {
         controller.index()
-        assert "/monitoredServer/list" == response.redirectedUrl
+        assert "/monitor/list" == response.redirectedUrl
     }
 
     void testList() {
@@ -37,26 +37,26 @@ class MonitorControllerTests {
         controller.save()
 
         assert model.monitoredServerInstance != null
-        assert view == '/monitoredServer/create'
+        assert view == '/monitor/create'
 
         response.reset()
 
         populateValidParams(params)
         controller.save()
 
-        assert response.redirectedUrl == '/monitoredServer/show/1'
+        assert response.redirectedUrl == '/monitor/show/1'
         assert controller.flash.message != null
-        assert MonitoredService.count() == 1
+        assert MonitoredServer.count() == 1
     }
 
     void testShow() {
         controller.show()
 
         assert flash.message != null
-        assert response.redirectedUrl == '/monitoredServer/list'
+        assert response.redirectedUrl == '/monitor/list'
 
         populateValidParams(params)
-        def monitoredServer = new MonitoredService(params)
+        def monitoredServer = new MonitoredServer(params)
 
         assert monitoredServer.save() != null
 
@@ -71,10 +71,10 @@ class MonitorControllerTests {
         controller.edit()
 
         assert flash.message != null
-        assert response.redirectedUrl == '/monitoredServer/list'
+        assert response.redirectedUrl == '/monitor/list'
 
         populateValidParams(params)
-        def monitoredServer = new MonitoredService(params)
+        def monitoredServer = new MonitoredServer(params)
 
         assert monitoredServer.save() != null
 
@@ -89,12 +89,12 @@ class MonitorControllerTests {
         controller.update()
 
         assert flash.message != null
-        assert response.redirectedUrl == '/monitoredServer/list'
+        assert response.redirectedUrl == '/monitor/list'
 
         response.reset()
 
         populateValidParams(params)
-        def monitoredServer = new MonitoredService(params)
+        def monitoredServer = new MonitoredServer(params)
 
         assert monitoredServer.save() != null
 
@@ -104,7 +104,7 @@ class MonitorControllerTests {
 
         controller.update()
 
-        assert view == "/monitoredServer/edit"
+        assert view == "/monitor/edit"
         assert model.monitoredServerInstance != null
 
         monitoredServer.clearErrors()
@@ -112,7 +112,7 @@ class MonitorControllerTests {
         populateValidParams(params)
         controller.update()
 
-        assert response.redirectedUrl == "/monitoredServer/show/$monitoredServer.id"
+        assert response.redirectedUrl == "/monitor/show/$monitoredServer.id"
         assert flash.message != null
 
         //test outdated version number
@@ -124,7 +124,7 @@ class MonitorControllerTests {
         params.version = -1
         controller.update()
 
-        assert view == "/monitoredServer/edit"
+        assert view == "/monitor/edit"
         assert model.monitoredServerInstance != null
         assert model.monitoredServerInstance.errors.getFieldError('version')
         assert flash.message != null
@@ -133,22 +133,22 @@ class MonitorControllerTests {
     void testDelete() {
         controller.delete()
         assert flash.message != null
-        assert response.redirectedUrl == '/monitoredServer/list'
+        assert response.redirectedUrl == '/monitor/list'
 
         response.reset()
 
         populateValidParams(params)
-        def monitoredServer = new MonitoredService(params)
+        def monitoredServer = new MonitoredServer(params)
 
         assert monitoredServer.save() != null
-        assert MonitoredService.count() == 1
+        assert MonitoredServer.count() == 1
 
         params.id = monitoredServer.id
 
         controller.delete()
 
-        assert MonitoredService.count() == 0
-        assert MonitoredService.get(monitoredServer.id) == null
-        assert response.redirectedUrl == '/monitoredServer/list'
+        assert MonitoredServer.count() == 0
+        assert MonitoredServer.get(monitoredServer.id) == null
+        assert response.redirectedUrl == '/monitor/list'
     }
 }
