@@ -1,4 +1,3 @@
-
 <%@ page import="de.internetallee.sven.sslmonitor.X509CertificateInformation" %>
 <%@ page import="org.joda.time.DateTime" %>
 
@@ -32,21 +31,22 @@
 					
 						<g:sortableColumn property="validNotAfter" title="${message(code: 'x509CertificateInformation.validNotAfter.label', default: 'Valid Not After')}" />
 
-                        <g:sortableColumn property="server" title="${message(code: 'x509CertificateInformation.server.label', default: 'Server')}" />
+                        <g:sortableColumn property="server" title="${message(code: 'server.hostname.label', default: 'Server')}" />
 
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${x509CertificateInformationInstanceList}" status="i" var="x509CertificateInformationInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
+					<g:set var="server" value="${x509CertificateInformationInstance.serviceCertificateLinks?.monitoredServer}" />
+                    <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
                         <td><g:link action="show" id="${x509CertificateInformationInstance.id}">${x509CertificateInformationInstance.subjectPrincipal?.truncate(30).encodeAsHTML()}</g:link></td>
 
                         <td>${x509CertificateInformationInstance.issuerDN?.truncate(20).encodeAsHTML()}</td>
 
                         <td>${x509CertificateInformationInstance.validNotAfter.toString("YYYY-MM-dd")}</td>
 
-                        <td>${x509CertificateInformationInstance.server?.hostname}:${x509CertificateInformationInstance.server?.port}</td>
+                        <td>${server}</td>
 
 					</tr>
 				</g:each>

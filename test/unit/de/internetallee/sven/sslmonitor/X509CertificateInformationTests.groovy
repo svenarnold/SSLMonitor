@@ -30,7 +30,7 @@ class X509CertificateInformationTests {
         assertEquals 'MD5 fingerprint must not be null', 'nullable', newCertInfo.errors['md5Fingerprint']
         assertEquals 'Valid not before must not be null', 'nullable', newCertInfo.errors['validNotBefore']
         assertEquals 'Valid not after must not be null', 'nullable', newCertInfo.errors['validNotAfter']
-        assertEquals 'Server must not be null', 'nullable', newCertInfo.errors['server']
+        //assertEquals 'Server must not be null', 'nullable', newCertInfo.errors['server']
 
         newCertInfo.subjectPrincipal = ''
         newCertInfo.issuerDN = ''
@@ -38,10 +38,12 @@ class X509CertificateInformationTests {
         newCertInfo.md5Fingerprint = 'md5'
         newCertInfo.validNotBefore = new DateTime()
         newCertInfo.validNotAfter = new DateTime()
-        newCertInfo.server = new MonitoredService(name: 'A Server', hostname: 'localhost', port: 443)
+        //newCertInfo.server = new MonitoredServer(name: 'A Server', hostname: 'localhost', port: 443)
         assertFalse newCertInfo.validate()
         assertEquals 'Subject principal must not be blank', 'blank', newCertInfo.errors['subjectPrincipal']
         assertEquals 'Issuer DN must not be blank', 'blank', newCertInfo.errors['issuerDN']
+        assertEquals 'SHA1 fingerprint must be unique', 'unique', newCertInfo.errors['sha1Fingerprint']
+        assertEquals 'MD5 fingerprint must be unique', 'unique', newCertInfo.errors['md5Fingerprint']
 
         newCertInfo.subjectPrincipal ='x'
         newCertInfo.issuerDN = 'x'

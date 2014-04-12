@@ -31,15 +31,13 @@ class X509CertificateInformation {
     DateTime validNotBefore
     DateTime validNotAfter
 
-    MonitoredService server
-
-    static belongsTo = MonitoredService
+    static hasMany = [serviceCertificateLinks: ServiceCertificateLink]
 
     static constraints = {
         subjectPrincipal(blank: false, maxSize: 1024)
         issuerDN(blank: false, maxSize: 1024)
-        sha1Fingerprint()
-        md5Fingerprint()
+        sha1Fingerprint(unique: true)
+        md5Fingerprint(unique: true)
         validNotBefore()
         validNotAfter()
     }

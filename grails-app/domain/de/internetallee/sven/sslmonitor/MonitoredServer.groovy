@@ -22,7 +22,7 @@ package de.internetallee.sven.sslmonitor
 import grails.rest.Resource
 
 @Resource(uri='/monitoredServices')
-class MonitoredService {
+class MonitoredServer {
 
     String name
     String hostname
@@ -33,7 +33,7 @@ class MonitoredService {
 
     List certificateInformationChain
 
-    static hasMany = [certificateInformationChain: X509CertificateInformation]
+   static hasMany = [certificateInformationChain: ServiceCertificateLink]
 
     static constraints = {
         name(blank: false, unique: true)
@@ -42,9 +42,9 @@ class MonitoredService {
         lastError(nullable: true)
     }
 
-    static mapping = {
-        certificateInformationChain cascade: 'all-delete-orphan'
-    }
+//    static mapping = {
+//        certificateInformationChain cascade: 'all-delete-orphan'
+//    }
 
     String toString() { name + ' (' + hostname + ':' + port + ')' }
 }

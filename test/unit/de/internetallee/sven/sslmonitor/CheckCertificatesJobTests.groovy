@@ -31,31 +31,36 @@ import org.junit.Before
 import org.junit.Test
 
 @TestMixin(GrailsUnitTestMixin)
-@Mock([MonitoredService, X509CertificateInformation, MailService])
+@Mock([MonitoredServer, X509CertificateInformation, ServiceCertificateLink, MailService])
 class CheckCertificatesJobTests {
 
     @Before
-    def void setUp() {
+    void setUp() {
         def currentDateTime = new DateTime()
-        def monitoredServer = new MonitoredService(name: 'example', hostname: 'host', port: 443)
 
-        monitoredServer.addToCertificateInformationChain(
+        def monitoredServer = new MonitoredServer(name: 'example', hostname: 'host', port: 443)
+
+        def cert = new X509CertificateInformation(
                 subjectPrincipal: 'cert0', issuerDN: 'me',
                 sha1Fingerprint: 'cert0sha1', md5Fingerprint: 'cert0md5',
                 validNotBefore: currentDateTime,
-                validNotAfter: currentDateTime.plus(Period.days(50)),
+                validNotAfter: currentDateTime.plus(Period.days(50)
+                )
         )
-        assert monitoredServer.save()
+
+        ServiceCertificateLink.create(monitoredServer, cert, true)
+
+        assert monitoredServer.certificateInformationChain.size() > 0
     }
 
     @After
-    def void tearDown() {
-        MonitoredService.list().each { it.delete() }
+    void tearDown() {
+        MonitoredServer.list().each { it.delete() }
         X509CertificateInformation.list().each { it.delete() }
     }
 
     @Test
-    def void testExecuteAllCertificatesOk() {
+    void testExecuteAllCertificatesOk() {
         def certificateServiceMockControl = mockFor(CertificateService)
         def mailServiceMockControl = mockFor(MailService)
 
@@ -63,6 +68,7 @@ class CheckCertificatesJobTests {
 
         certificateServiceMockControl.demand.updateAllCertificateChains(1) {}
         mailServiceMockControl.demand.sendMail(0) { }
+
         job.certificateService = certificateServiceMockControl.createMock()
         job.mailService = mailServiceMockControl.createMock()
 
@@ -73,13 +79,15 @@ class CheckCertificatesJobTests {
     }
 
     @Test
-    def void testExecuteCertificatesNeedsAttention() {
+    void testExecuteCertificatesNeedsAttention() {
         def certificateServiceMockControl = mockFor(CertificateService)
         def mailServiceMockControl = mockFor(MailService)
 
         def job = new CheckCertificatesJob()
+
         certificateServiceMockControl.demand.updateAllCertificateChains(1) {}
         mailServiceMockControl.demand.sendMail(1) { }
+
         job.certificateService = certificateServiceMockControl.createMock()
         job.mailService = mailServiceMockControl.createMock()
 

@@ -24,6 +24,7 @@ import org.joda.time.Period
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import sun.security.ssl.KeyManagerFactoryImpl
 
 import static junit.framework.Assert.assertEquals
 import static junit.framework.Assert.assertTrue
@@ -32,24 +33,23 @@ class X509CertificateInformationIntegrationTests {
 
     @Before
     void setUp() {
-        def currentDateTime = new DateTime()
-        def monitoredServer = new MonitoredService(name: 'example', hostname: 'host', port: 443)
 
-        monitoredServer.addToCertificateInformationChain(
+        def currentDateTime = new DateTime()
+
+        def monitoredServer = new MonitoredServer(name: 'example', hostname: 'host', port: 443)
+        def cert0 = new X509CertificateInformation(
                 subjectPrincipal: 'cert0', issuerDN: 'me',
                 sha1Fingerprint: 'cert0sha1', md5Fingerprint: 'cert0md5',
                 validNotBefore: currentDateTime,
-                validNotAfter: currentDateTime.plus(Period.days(9)),
+                validNotAfter: currentDateTime.plus(Period.days(9))
         )
-
-        monitoredServer.addToCertificateInformationChain(
+        def cert1 = new X509CertificateInformation(
                 subjectPrincipal: 'cert1', issuerDN: 'me',
                 sha1Fingerprint: 'cert1sha1', md5Fingerprint: 'cert1md5',
                 validNotBefore: currentDateTime,
                 validNotAfter: currentDateTime.plus(Period.days(10))
         )
-
-        monitoredServer.addToCertificateInformationChain(
+        def cert2 = new X509CertificateInformation(
                 subjectPrincipal: 'cert2', issuerDN: 'me',
                 sha1Fingerprint: 'cert2sha1', md5Fingerprint: 'cert2md5',
                 validNotBefore: currentDateTime,
@@ -57,16 +57,30 @@ class X509CertificateInformationIntegrationTests {
         )
 
         assert monitoredServer.save()
+        assert cert0.save()
+        assert cert1.save()
+        assert cert2.save()
+
+        ServiceCertificateLink.create(monitoredServer, cert0, true)
+        ServiceCertificateLink.create(monitoredServer, cert1, true)
+        ServiceCertificateLink.create(monitoredServer, cert2, true)
     }
 
     @After
     void tearDown() {
-        MonitoredService.list().each { it.delete() }
+        //new ArrayList<ServiceCertificateLink>(ServiceCertificateLink.list()).each { ServiceCertificateLink.remove(it.monitoredServer, it.x509CertificateInformation)}
+        //MonitoredServer.list().each { it.delete() }
+        //X509CertificateInformation.list().each { it.delete() }
+        MonitoredServer.list().each { it.getCertificateInformationChain().clear(); it.save(false) }
+        X509CertificateInformation.list().each { it.getServiceCertificateLinks().clear(); it.save(false) }
+        ServiceCertificateLink.executeUpdate('delete from ServiceCertificateLink')
+        MonitoredServer.executeUpdate('delete from MonitoredServer')
+        X509CertificateInformation.executeUpdate('delete from X509CertificateInformation ')
     }
 
     @Test
     void testSetup() {
-        assertEquals 1, MonitoredService.count()
+        assertEquals 1, MonitoredServer.count()
         assertEquals 3, X509CertificateInformation.count()
     }
 

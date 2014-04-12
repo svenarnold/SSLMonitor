@@ -76,15 +76,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${x509CertificateInformationInstance?.server}">
+				<g:if test="${x509CertificateInformationInstance?.serviceCertificateLinks}">
+                <g:set var="links" value="${x509CertificateInformationInstance.serviceCertificateLinks}" />
 				<li class="fieldcontain">
-					<span id="server-label" class="property-label"><g:message code="x509CertificateInformation.server.label" default="Server" /></span>
+					<span id="server-label" class="property-label"><g:message code="server.hostname.label" default="Server" /></span>
 					
-						<span class="property-value" aria-labelledby="server-label"><g:link controller="monitor" action="show" id="${x509CertificateInformationInstance?.server?.id}">${x509CertificateInformationInstance?.server?.encodeAsHTML()}</g:link></span>
-					
+						<span class="property-value" aria-labelledby="server-label">
+                            <g:each var="link" in="${links}">
+                                <g:link controller="monitor" action="show" id="${link.monitoredServer?.id}">${link.monitoredServer?.hostname?.encodeAsHTML()}</g:link>
+
+                            </g:each>
+                        </span>
 				</li>
 				</g:if>
-			
+
 			</ol>
 		</div>
 	</body>

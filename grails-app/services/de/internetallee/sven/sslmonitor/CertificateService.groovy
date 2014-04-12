@@ -19,6 +19,7 @@
 
 package de.internetallee.sven.sslmonitor
 
+import org.apache.log4j.LogManager
 import org.joda.time.DateTime
 
 import javax.net.ssl.SSLContext
@@ -57,8 +58,7 @@ class CertificateService {
         md5Digest.digest().encodeHex().toString()
     }
 
-    def getX509CertificatesInformation(MonitoredService server) throws IOException, UnknownHostException {
-
+    def getX509CertificatesForService(MonitoredServer server) throws IOException, UnknownHostException {
         def timeoutInMillis = grailsApplication.config.sslMonitor.timeoutInMillis ?: 5000
         log.debug("  Socket timeout set to ${timeoutInMillis} milliseconds.")
 
@@ -68,37 +68,94 @@ class CertificateService {
         SSLSession session = sslSocket.getSession();
 
         Certificate[] serverCertificates = session.getPeerCertificates();
-        serverCertificates.findAll { "X.509".equals(it.type) }.collect { cert ->
-            new X509CertificateInformation(
-                    subjectPrincipal: cert.subjectX500Principal.name,
-                    issuerDN: cert.issuerDN.name,
-                    sha1Fingerprint: sha1HexString(cert.encoded),
-                    md5Fingerprint: md5HexString(cert.encoded),
-                    validNotBefore: new DateTime(cert.notBefore),
-                    validNotAfter: new DateTime(cert.notAfter)
-            )
+        serverCertificates.findAll { "X.509".equals(it.type) }
+    }
+
+    def getX509CertificatesInformation(MonitoredServer server) throws IOException, UnknownHostException {
+        def certificateInformations = []
+
+        getX509CertificatesForService(server).each { cert ->
+            def certInfo = X509CertificateInformation.findBySha1Fingerprint(sha1HexString(cert.encoded))
+            if (! certInfo) {
+                certInfo = new X509CertificateInformation(
+                        subjectPrincipal: cert.subjectX500Principal.name,
+                        issuerDN: cert.issuerDN.name,
+                        sha1Fingerprint: sha1HexString(cert.encoded),
+                        md5Fingerprint: md5HexString(cert.encoded),
+                        validNotBefore: new DateTime(cert.notBefore),
+                        validNotAfter: new DateTime(cert.notAfter)
+                )
+                assert certInfo.save()
+            }
+            certificateInformations.add(certInfo)
         }
+        certificateInformations
+    }
+
+    def cleanupCertificates() {
+
+        log.info 'Deleting stale certificate informations'
+
+        X509CertificateInformation.findAll("\
+                from X509CertificateInformation xci \
+                left outer join xci.serviceCertificateLinks li \
+                where li is null \
+        ").each {
+            it[0].delete()
+        }
+
+        // I would prefer to perform a bulk delete but it seems that is not possible because of
+        // this bug in hibernate (which is not fixed in 3.6:
+        // https://hibernate.atlassian.net/browse/HHH-1657
+//        X509CertificateInformation.executeUpdate("\
+//            delete from X509CertificateInformation xi \
+//            where xi.id in \
+//                (select xci.id as xcid \
+//                from X509CertificateInformation xci \
+//                left outer join xci.serviceCertificateLinks li \
+//                where li is null) \
+//        ")
     }
 
     def updateAllCertificateChains() {
+
         log.info ("Updating all certificates.")
-        MonitoredService.list().each { server ->
+
+        MonitoredServer.list().each { server ->
+
+            log.debug("Updating certificate info for server " + server.hostname)
+
             try {
-                log.debug("Updating certificate info for server " + server.hostname)
+
                 def certificates = getX509CertificatesInformation(server)
-                if (server.certificateInformationChain) {
-                    log.debug("  Removing obsolete certificates")
-                    server.certificateInformationChain.removeAll { !certificates.contains(it) }
+
+                certificates.each { certificate ->
+                    log.debug ("examining certificate: " + certificate)
+                    def link = ServiceCertificateLink.findByMonitoredServerAndX509CertificateInformation(server, certificate)
+                    if (link) {
+                        log.debug("  Certificate already in database for this server")
+                    } else {
+                        link = ServiceCertificateLink.create(server, certificate)
+                        log.debug("  Adding new certificate: " + certificate)
+                    }
                 }
-                certificates.findAll{!server.certificateInformationChain?.contains(it)}.each {
-                    log.debug("  Adding new certificate: " + it)
-                    server.addToCertificateInformationChain(it)
+
+                log.debug("Removing obsolete certificates")
+                ServiceCertificateLink.findAllByMonitoredServer(server)
+                        .findAll { ! (certificates.contains(it.x509CertificateInformation)) }
+                        .each {
+                    log.debug("  Removing certificate: " + it.x509CertificateInformation)
+                    ServiceCertificateLink.remove(server, it.x509CertificateInformation, true)
                 }
+
                 server.connectionSuccess = true
                 server.lastError = ''
-            } catch (Exception e) {
+                server.save()
+
+            }  catch (Exception e) {
+
                 log.warn('Exception caught while trying to retrieve certificate information', e)
-                org.apache.log4j.LogManager.getLogger("StackTrace").error('Exception caught while trying to retrieve certificate information:', e)
+                LogManager.getLogger("StackTrace").error('Exception caught while trying to retrieve certificate information:', e)
                 switch (e) {
                     case SocketTimeoutException:
                         server.lastError = 'Socket Timeout'
@@ -112,7 +169,12 @@ class CertificateService {
                 }
                 server.connectionSuccess = false
             }
-            server.save(flush: true)
+
+            assert server.save(flush: true)
         }
+
+        cleanupCertificates()
     }
+
+
 }

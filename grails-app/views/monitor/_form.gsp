@@ -1,4 +1,4 @@
-<%@ page import="de.internetallee.sven.sslmonitor.MonitoredService" %>
+<%@ page import="de.internetallee.sven.sslmonitor.MonitoredServer" %>
 
 
 

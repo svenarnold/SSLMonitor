@@ -21,14 +21,14 @@ package de.internetallee.sven.sslmonitor
 
 import grails.test.mixin.*
 
-@TestFor(MonitoredService)
-class MonitoredServiceTests {
+@TestFor(MonitoredServer)
+class MonitoredServerTests {
 
     void testConstraints() {
-        def monitoredService = new MonitoredService(name: 'Unique Service', hostname: 'localhost', port: 443)
-        mockForConstraintsTests(MonitoredService, [monitoredService])
+        def monitoredService = new MonitoredServer(name: 'Unique Service', hostname: 'localhost', port: 443)
+        mockForConstraintsTests(MonitoredServer, [monitoredService])
 
-        def newService = new MonitoredService()
+        def newService = new MonitoredServer()
         assertFalse newService.validate()
         assertEquals 'Name must not be nullable.', 'nullable', newService.errors['name']
         assertEquals 'Hostname must not be nullable.', 'nullable', newService.errors['hostname']
@@ -52,7 +52,7 @@ class MonitoredServiceTests {
     }
 
     void testToString() {
-        def monitoredService = new MonitoredService(name: 'service', hostname: 'host', port: 80)
+        def monitoredService = new MonitoredServer(name: 'service', hostname: 'host', port: 80)
         assertEquals 'service (host:80)', monitoredService.toString()
     }
 }
