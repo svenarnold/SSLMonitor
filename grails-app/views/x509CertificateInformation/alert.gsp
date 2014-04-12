@@ -34,6 +34,11 @@ ${certificate.validNotAfter}
 
 Issuer DN:
 ${certificate.issuerDN}
+
+Services:
+<g:each in="${certificate.serviceCertificateLinks}" var="link">
+${link?.server}
+</g:each>
 </g:each>
 
 
