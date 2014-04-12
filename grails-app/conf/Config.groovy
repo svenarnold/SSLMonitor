@@ -97,6 +97,10 @@ log4j = {
             debug 'grails.app'
             info 'grails.app.taglib.org.grails.plugin.resource'
         }
+        test {
+            debug 'grails.app'
+            info 'grails.app.taglib.org.grails.plugin.resource'
+        }
     }
 }
 
