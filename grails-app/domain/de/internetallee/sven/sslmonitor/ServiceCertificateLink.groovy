@@ -31,11 +31,13 @@ class ServiceCertificateLink {
         if (!instance) {
             return false
         } else {
-            server.removeFromCertificateInformationChain(instance)
-            certificate.removeFromServiceCertificateLinks(instance)
-            server.save()
-            certificate.save()
-            instance.delete(flush: flush)
+            withTransaction { status ->
+                server.removeFromCertificateInformationChain(instance)
+                certificate.removeFromServiceCertificateLinks(instance)
+                server.save()
+                certificate.save()
+                instance.delete(flush: flush)
+            }
         }
     }
 }
