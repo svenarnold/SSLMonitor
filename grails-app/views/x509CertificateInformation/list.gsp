@@ -33,7 +33,7 @@
 					
 						<g:sortableColumn property="validNotAfter" title="${message(code: 'x509CertificateInformation.validNotAfter.label', default: 'Valid Not After')}" />
 
-                        <g:sortableColumn property="server" title="${message(code: 'server.hostname.label', default: 'Server')}" />
+                        <g:sortableColumn property="server" title="${message(code: 'monitoredServer.label', default: 'Monitored Server')}" />
 
 					</tr>
 				</thead>

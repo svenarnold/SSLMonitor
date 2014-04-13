@@ -81,7 +81,7 @@
 				<g:if test="${x509CertificateInformationInstance?.serviceCertificateLinks}">
                 <g:set var="links" value="${x509CertificateInformationInstance.serviceCertificateLinks}" />
 				<li class="fieldcontain">
-					<span id="server-label" class="property-label"><g:message code="server.hostname.label" default="Server" /></span>
+					<span id="server-label" class="property-label"><g:message code="monitoredServer.hostname.label" default="Server" /></span>
 					
 						<span class="property-value" aria-labelledby="server-label">
                             <g:each var="link" in="${links}">
