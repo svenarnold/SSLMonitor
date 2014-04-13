@@ -111,6 +111,9 @@ grails.plugin.springsecurity.authority.className = 'de.internetallee.sven.sslmon
 grails.plugin.springsecurity.rejectIfNoRule = true
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 
+grails.plugin.springsecurity.useBasicAuth = true
+grails.plugin.springsecurity.basic.realmName = 'SSL Monitor'
+
 grails.plugin.springsecurity.interceptUrlMap = [
         '/js/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/css/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
@@ -119,6 +122,12 @@ grails.plugin.springsecurity.interceptUrlMap = [
         '/logout/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/**': ['IS_AUTHENTICATED_REMEMBERED']
 ]
+
+grails.plugin.springsecurity.filterChain.chainMap = [
+        '/monitoredServices/**': 'JOINED_FILTERS,-exceptionTranslationFilter',
+        '/**': 'JOINED_FILTERS,-basicAuthenticationFilter,-basicExceptionTranslationFilter'
+]
+
 // Added by the Joda-Time plugin:
 grails.gorm.default.mapping = {
 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentDateMidnight, class: org.joda.time.DateMidnight
