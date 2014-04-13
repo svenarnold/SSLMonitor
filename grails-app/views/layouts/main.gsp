@@ -19,13 +19,16 @@
 	</head>
 	<body>
 		<div id="grailsLogo" role="banner"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'sslmonitor-logo.png')}" alt="Grails"/></a></div>
-		<div class="nav" role="navigation">
-		    <nav:primary scope="app" />
-		    <nav:secondary scope="app" />
-		</div>
+		<sec:ifLoggedIn>
+            <div class="nav" role="navigation">
+                <nav:primary scope="app" />
+                <nav:secondary scope="app" />
+            </div>
+		</sec:ifLoggedIn>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo">
             <g:meta name="app.name"/> <g:meta name="app.version"/> (${g.render(template: '/git').trim()})
+            &copy; 2014 Sven Arnold
 		</div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 		<g:javascript library="application"/>

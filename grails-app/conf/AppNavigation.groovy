@@ -13,6 +13,10 @@ navigation = {
 		updateChains()
 	}
 
+    logout(controller: 'logout', action: 'index')
+
+    status(view: 'status')
+
 	monitoredServer visible: false
     }
 }
