@@ -19,6 +19,10 @@
 	</head>
 	<body>
 		<div id="grailsLogo" role="banner"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a></div>
+		<div class="nav" role="navigation">
+		    <nav:primary scope="app" />
+		    <nav:secondary scope="app" />
+		</div>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo">
             <g:meta name="app.name"/> <g:meta name="app.version"/> (${g.render(template: '/git').trim()})
