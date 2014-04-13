@@ -103,11 +103,20 @@
 			</ul>
 		</div>
 		<div id="page-body" role="main">
-			<h1>Welcome to Grails</h1>
-			<p>Congratulations, you have successfully started your first Grails application! At the moment
-			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
-			   content you may choose. Below is a list of controllers that are currently deployed in this application,
-			   click on each to execute its default action:</p>
+			<h1>Welcome to SSL Monitor</h1>
+            <p>
+                SSL Monitor is a simple tool to monitor SSL secured services. It is intended to support managing
+                of X509 certificates by sending email alerts if a certificate is about to expire. This is currently
+                the only feature.
+            </p>
+            <p>
+                For a short documentation see the file <em>README.md</em>. If you would like to provide some feedback,
+                you may contact the author at sven at internetallee dot de.
+            </p>
+			<p>
+                This status page is for information during development only and is part of the default grails
+                application boiler plate. There is no need to use the controller links below.
+            </p>
 
 			<div id="controller-list" role="navigation">
 				<h2>Available Controllers:</h2>
