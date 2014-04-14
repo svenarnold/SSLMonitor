@@ -92,7 +92,7 @@ class CheckCertificatesJobTests {
         job.certificateService = certificateServiceMockControl.createMock()
         job.mailService = mailServiceMockControl.createMock()
 
-        grailsApplication.config.sslMonitor.notification.intervalInDays = 50
+        grailsApplication.config.sslMonitor.notification.dueTimeInDays = 50
         job.grailsApplication = grailsApplication
         job.execute()
 
@@ -102,6 +102,7 @@ class CheckCertificatesJobTests {
 
     @Test
     void testRenderAlertView() {
-        System.err.println (render (view: '/x509CertificateInformation/alert', model: [certificates: X509CertificateInformation.certificatesDueInDays(11).list()]))
+        assertNotNull (render (view: '/x509CertificateInformation/alert',
+                model: [certificates: X509CertificateInformation.certificatesDueInDays(11).list()]))
     }
 }

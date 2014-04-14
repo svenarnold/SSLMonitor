@@ -30,13 +30,13 @@ class CheckCertificatesJob {
 
     static triggers = {
 
-        cron cronExpression: Holders.grailsApplication.config.sslMonitor?.cron?: "0 0 8 * * ?", startDelay: 10000
+        cron cronExpression: Holders.grailsApplication.config.sslMonitor?.notification?.cron?: "0 0 8 * * ?", startDelay: 10000
     }
 
     def execute() {
         log.debug("Executing job to check certificates")
         certificateService.updateAllCertificateChains()
-        def days = grailsApplication?.config?.sslMonitor?.notification?.intervalInDays ?: 30
+        def days = grailsApplication?.config?.sslMonitor?.notification?.dueTimeInDays ?: 30
         log.debug("Interval is ${days} days")
         def certificatesQuery = X509CertificateInformation.certificatesDueInDays(days)
         if (certificatesQuery.count() > 0) {

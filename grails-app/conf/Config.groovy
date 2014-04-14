@@ -149,7 +149,8 @@ grails.gorm.default.mapping = {
 }
 
 sslMonitor.timeoutInMillis = 5000
-sslMonitor.notification.intervalInDays = 60
+sslMonitor.notification.cron = "0 0 8 * * ?"
+sslMonitor.notification.dueTimeInDays = 30
 sslMonitor.notification.sender = 'sslmonitor@localhost'
 sslMonitor.notification.recipient = 'root@localhost'
 
