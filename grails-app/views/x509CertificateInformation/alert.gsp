@@ -43,6 +43,6 @@ ${link?.monitoredServer}
 You are receiving this email because you are registered as an administrative person in
 <g:meta name="app.name"/> (${grailsApplication?.config?.grails?.serverURL})
 
-<g:meta name="app.name"/> version <g:meta name="app.version"/>  (${g.render(template: '/git').trim()})
+<g:meta name="app.name"/> version <g:meta name="app.version"/>  (${g.render(template: '/git')})
 
 © 2014 Sven Arnold, source code available at: https://github.com/svenarnold/SSLMonitor

@@ -24,13 +24,14 @@ import grails.plugin.mail.MailService
 import grails.test.mixin.Mock
 import grails.test.mixin.TestMixin
 import grails.test.mixin.support.GrailsUnitTestMixin
+import grails.test.mixin.web.GroovyPageUnitTestMixin
 import org.joda.time.DateTime
 import org.joda.time.Period
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-@TestMixin(GrailsUnitTestMixin)
+@TestMixin([GrailsUnitTestMixin, GroovyPageUnitTestMixin])
 @Mock([MonitoredServer, X509CertificateInformation, ServiceCertificateLink, MailService])
 class CheckCertificatesJobTests {
 
@@ -97,5 +98,10 @@ class CheckCertificatesJobTests {
 
         certificateServiceMockControl.verify()
         mailServiceMockControl.verify()
+    }
+
+    @Test
+    void testRenderAlertView() {
+        System.err.println (render (view: '/x509CertificateInformation/alert', model: [certificates: X509CertificateInformation.certificatesDueInDays(11).list()]))
     }
 }
