@@ -22,10 +22,7 @@ SSL Monitor Notification
 One or more ssl certificates need your attention:
 <g:each in="${certificates}" var="certificate" status="i">
 
-=== ${certificate.server?.name} ===
-Service:
-${certificate.server}
-
+===========================================================
 Subject Principal:
 ${certificate.subjectPrincipal}
 
@@ -35,12 +32,13 @@ ${certificate.validNotAfter}
 Issuer DN:
 ${certificate.issuerDN}
 
-Services:
+Affected Services:
 <g:each in="${certificate.serviceCertificateLinks}" var="link">
-${link?.server}
+${link?.monitoredServer}
 </g:each>
 </g:each>
 
+-----------------------------------------------------------
 
 You are receiving this email because you are registered as an administrative person in
 <g:meta name="app.name"/> (${grailsApplication?.config?.grails?.serverURL})

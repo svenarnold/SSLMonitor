@@ -21,13 +21,11 @@ package de.internetallee.sven.sslmonitor
 
 import org.joda.time.DateTime
 import org.joda.time.Period
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import sun.security.ssl.KeyManagerFactoryImpl
 
-import static junit.framework.Assert.assertEquals
-import static junit.framework.Assert.assertTrue
+import static org.junit.Assert.assertEquals
+import static org.junit.Assert.assertTrue
 
 class X509CertificateInformationIntegrationTests {
 
@@ -64,18 +62,6 @@ class X509CertificateInformationIntegrationTests {
         ServiceCertificateLink.create(monitoredServer, cert0, true)
         ServiceCertificateLink.create(monitoredServer, cert1, true)
         ServiceCertificateLink.create(monitoredServer, cert2, true)
-    }
-
-    @After
-    void tearDown() {
-        //new ArrayList<ServiceCertificateLink>(ServiceCertificateLink.list()).each { ServiceCertificateLink.remove(it.monitoredServer, it.x509CertificateInformation)}
-        //MonitoredServer.list().each { it.delete() }
-        //X509CertificateInformation.list().each { it.delete() }
-        MonitoredServer.list().each { it.getCertificateInformationChain().clear(); it.save(false) }
-        X509CertificateInformation.list().each { it.getServiceCertificateLinks().clear(); it.save(false) }
-        ServiceCertificateLink.executeUpdate('delete from ServiceCertificateLink')
-        MonitoredServer.executeUpdate('delete from MonitoredServer')
-        X509CertificateInformation.executeUpdate('delete from X509CertificateInformation ')
     }
 
     @Test
