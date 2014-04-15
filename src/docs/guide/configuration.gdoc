@@ -13,27 +13,27 @@ h2. Authentication
 By default the whole application is secured by using the spring-security-core plugin.
 There is one user configured with the default credentials:
 
-
-login: admin
-
-password: secret
+{table}
+*login* | *password*
+admin | secret
+{table}
 
 The user is hardcoded in @BootStrap.groovy@
 
 h2. Jobs and Notification
 
-Certificates are updated by a quartz job which is triggered by a cron like configuration. To overwrite the default
-trigger @"0 0 8 * * ?"@ the property @sslMonitor.cron@ can be used.
-
-Other Options (default given) are:
+Certificates are updated by a quartz job which is triggered by a cron like configuration. The available configuration
+options (defaults given) are:
 
 {code}
-sslMonitor.timeoutInMillis = 5000  // timeout for connections
-sslMonitor.notification.intervalInDays = 60 // send notification 60 days before certificates expire
-sslMonitor.notification.recipient = 'root@localhost' // notification email recipient
+sslMonitor.timeoutInMillis = 5000                       // timeout for SSL connections
+sslMonitor.notification.cron = "0 0 8 * * ?"            // cron trigger for job to check certificates
+sslMonitor.notification.dueTimeInDays = 30              // send notification if certificates in 30 days or less
+sslMonitor.notification.sender = 'sslmonitor@localhost' // notification email sender
+sslMonitor.notification.recipient = 'root@localhost'    // notification email recipient
 {code}
 
 h2. Email Configuration
 
 Email is provided by the mail plugin and can be configured to the plugin's documentation:
-[http://grails.org/plugin/mail]
+[Mail Plugin|http://grails.org/plugin/mail]
