@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with SSLMonitor. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package de.internetallee.sven.sslmonitor
 
 import org.joda.time.DateTime
@@ -62,10 +61,7 @@ class X509CertificateInformationIntegrationTests {
         ServiceCertificateLink.create(monitoredServer, cert0, true)
         ServiceCertificateLink.create(monitoredServer, cert1, true)
         ServiceCertificateLink.create(monitoredServer, cert2, true)
-    }
 
-    @Test
-    void testSetup() {
         assertEquals 1, MonitoredServer.count()
         assertEquals 3, X509CertificateInformation.count()
     }

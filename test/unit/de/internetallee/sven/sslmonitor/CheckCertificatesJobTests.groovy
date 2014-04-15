@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with SSLMonitor. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package de.internetallee.sven.sslmonitor
 
 import de.internetallee.sslmonitor.CheckCertificatesJob
@@ -27,7 +26,6 @@ import grails.test.mixin.support.GrailsUnitTestMixin
 import grails.test.mixin.web.GroovyPageUnitTestMixin
 import org.joda.time.DateTime
 import org.joda.time.Period
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -52,12 +50,6 @@ class CheckCertificatesJobTests {
         ServiceCertificateLink.create(monitoredServer, cert, true)
 
         assert monitoredServer.certificateInformationChain.size() > 0
-    }
-
-    @After
-    void tearDown() {
-        MonitoredServer.list().each { it.delete() }
-        X509CertificateInformation.list().each { it.delete() }
     }
 
     @Test

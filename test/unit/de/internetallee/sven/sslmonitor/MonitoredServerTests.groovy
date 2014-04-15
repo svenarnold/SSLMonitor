@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with SSLMonitor. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package de.internetallee.sven.sslmonitor
 
 import grails.test.mixin.*
