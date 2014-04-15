@@ -24,9 +24,11 @@ HTML documentation can be created by running "grails doc".
 SSLMonitor is built upon and uses the GRAILS framework (http://www.grails.org).
 
 Additionally installed plugins are:
+- joda-time (http://grails.org/plugin/joda-time)
 - spring-security-core (http://grails.org/plugin/spring-security-core)
 - quartz (http://grails.org/plugin/quartz)
 - mail (http://grails.org/plugin/mail)
+- platform-core (http://grails.org/plugin/platform-core)
 
 ## Disclaimer
 
