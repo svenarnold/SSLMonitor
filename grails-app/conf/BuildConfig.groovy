@@ -54,7 +54,6 @@ grails.project.dependency.resolution = {
 
         runtime ":jquery:1.11.0.1"
         runtime ":resources:1.2.7"
-
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
@@ -63,11 +62,10 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.3.8"
 
         compile ':cache:1.1.1'
-	    //compile ':scaffolding:2.0.1'
         compile ':joda-time:1.4'
         compile ':spring-security-core:2.0-RC2'
         compile ':quartz:1.0.1'
         compile ':mail:1.0.4'
-	compile ':platform-core:1.0.RC6'
+	    compile ':platform-core:1.0.RC6'
     }
 }
